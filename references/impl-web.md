@@ -54,13 +54,14 @@
 11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。由于无法在 `display: none` 上运行动画，退出动画必须通过 JS 控制：先添加退出动画 class → 等待动画结束后（`setTimeout` 匹配动画时长）→ 再隐藏元素。Modal 遮罩必须有渐入/渐出动画。Select 下拉面板同样需要淡入/淡出（opacity + translateY）。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
+12b. **浮层与触发元素间距**：Select 下拉面板、Dropdown、Popover、Tooltip 等浮层与触发元素之间必须保留 4–8px 垂直间距（`top: calc(100% + 4px)` 或 `margin-top: 4px`），不允许紧贴触发元素无间距。
 13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
 14. **卡片/列表项内容不被截断**：网格或列表中的每个项目必须能完整显示其内部内容（图片、标题、描述、标签等），不允许因 `overflow: hidden`、固定高度不足或 `max-height` 限制导致内容被裁剪或被相邻项目遮挡。如果内容过多应使用 `min-height` 确保基础可见区域，或允许项目高度随内容自适应（`height: auto`）。图片容器固定宽高比，文字区域不设固定高度。
 15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
     - **默认**（rest）：清晰可辨认为交互元素
-    - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`
+    - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`。按钮、输入框、Select 触发器、下拉选项等所有表单控件必须有悬停效果，不允许无悬停反馈
     - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover。焦点环颜色必须使用品牌色或强调色的半透明版本（`rgba` 不透明度 ≥ 0.25），确保在背景色上有足够辨识度。不允许使用不透明度 ≤ 0.15 的超浅色作为焦点环。
-    - **按下**（active）：瞬间反馈（scale 微缩或背景加深），时长 ≤ 100ms
+    - **按下/激活**（active）：按钮必须有按下状态反馈（`transform: scale(0.97)` 或背景加深），时长 ≤ 100ms，不允许无 active 效果的按钮。非按钮元素不需要 active 状态
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
     - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
