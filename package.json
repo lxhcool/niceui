@@ -1,14 +1,14 @@
 {
   "name": "ui-nice-skill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "面向网页与应用界面的设计、实现和审查工作流。让任何模型都能产出质量稳定的真实界面。",
   "main": "SKILL.md",
-"files": [
+  "files": [
     "SKILL.md",
     "references/",
     "agents/",
     "README.md"
-],
+  ],
   "keywords": [
     "ui-design",
     "design-system",
@@ -19,9 +19,9 @@
     "design-guidelines"
   ],
   "bin": {
-  "niceui": "bin/niceui.js"
-},
-"license": "MIT",
+    "niceui": "bin/niceui.js"
+  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lxhcool/niceui.git"
