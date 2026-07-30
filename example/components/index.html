@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>组件库 — NiceUI 示例</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:focus:not(:focus-visible){outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:root{--canvas:#F8F6F3;--surface:#FFFFFF;--surface-hover:#F3F1ED;--brand:#2D4A3E;--brand-hover:#243D33;--brand-dim:rgba(45,74,62,0.1);--accent:#C47A5A;--accent-hover:#B06A4A;--accent-dim:rgba(196,122,90,0.1);--text-primary:#1C1A18;--text-secondary:#5C5650;--text-tertiary:#9C948E;--border:#E8E3DC;--shadow-sm:0 1px 3px rgba(28,26,24,0.05);--shadow-md:0 4px 16px rgba(28,26,24,0.06);--shadow-lg:0 8px 32px rgba(28,26,24,0.08);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
+::selection{background:var(--brand);color:#fff}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important}}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text-primary);background:var(--canvas);-webkit-font-smoothing:antialiased;padding:0 0 80px}
+
+/* Layout */
+.page{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.page-head{padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.page-title{font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-0.3px}
+.page-desc{font-size:14px;color:var(--text-secondary);margin-top:6px}
+
+.section{margin-bottom:48px}
+.section-title{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.section-demo{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:20px;background:var(--surface);border-radius:var(--radius-md);margin-bottom:16px}
+
+/* Buttons */
+.btn{font-family:"Inter",system-ui,sans-serif;font-size:13px;font-weight:600;padding:10px 22px;border-radius:var(--radius-sm);border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background 0.2s var(--ease),color 0.2s var(--ease),transform 0.15s var(--ease),opacity 0.2s;line-height:1}
+.btn svg{flex-shrink:0}
+.btn:active{transform:scale(0.97)}
+.btn--primary{background:var(--brand);color:#fff}
+@media(hover:hover)and(pointer:fine){.btn--primary:hover{background:var(--brand-hover)}}
+.btn--secondary{background:transparent;color:var(--text-primary);border:1px solid var(--border)}
+@media(hover:hover)and(pointer:fine){.btn--secondary:hover{border-color:var(--text-secondary);background:var(--surface-hover)}}
+.btn--text{background:transparent;color:var(--text-secondary);padding:10px 12px}
+@media(hover:hover)and(pointer:fine){.btn--text:hover{color:var(--text-primary);background:var(--surface-hover);border-radius:var(--radius-sm)}}
+.btn--disabled{opacity:0.45;cursor:not-allowed;pointer-events:none}
+.btn--loading{position:relative;color:transparent!important;pointer-events:none}
+.btn--loading::after{content:'';position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;top:50%;left:50%;margin:-8px 0 0 -8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-sm{font-size:12px;padding:7px 16px}
+.btn-lg{font-size:14px;padding:12px 28px}
+
+/* Inputs */
+.input-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:200px}
+.input-label{font-size:12px;font-weight:500;color:var(--text-secondary)}
+.input{font-family:"Inter",system-ui,sans-serif;font-size:14px;padding:10px 14px;border:none;border-radius:var(--radius-sm);background:var(--canvas);color:var(--text-primary);transition:background 0.2s var(--ease);width:100%;outline:none}
+.input::placeholder{color:var(--text-tertiary)}
+@media(hover:hover)and(pointer:fine){.input:hover{background:var(--border)}}
+.input:focus{background:var(--surface);box-shadow:0 0 0 2px var(--accent-dim)}
+.input--bordered{background:var(--surface);border:1px solid var(--border)}
+@media(hover:hover)and(pointer:fine){.input--bordered:hover{border-color:var(--text-tertiary)}}
+.input--bordered:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+.input--disabled{opacity:0.45;cursor:not-allowed;pointer-events:none}
+
+/* Custom Select */
+.select-wrap{position:relative;min-width:180px}
+.select-trigger{font-family:"Inter",system-ui,sans-serif;font-size:14px;padding:10px 36px 10px 14px;border:none;border-radius:var(--radius-sm);background:var(--canvas);color:var(--text-primary);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:background 0.2s var(--ease);width:100%;text-align:left;line-height:1}
+.select-trigger::after{content:'';width:10px;height:10px;flex-shrink:0;margin-left:auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235C5650' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center}
+@media(hover:hover)and(pointer:fine){.select-trigger:hover{background:var(--border)}}
+.select-trigger:focus{background:var(--surface);box-shadow:0 0 0 2px var(--accent-dim);outline:none}
+.select-panel{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);z-index:200;padding:4px;max-height:200px;overflow-y:auto}
+.select-panel--open{display:block}
+.select-option{padding:8px 12px;font-size:13px;color:var(--text-secondary);border-radius:4px;cursor:pointer;transition:background 0.15s var(--ease)}
+@media(hover:hover)and(pointer:fine){.select-option:hover{background:var(--canvas);color:var(--text-primary)}}
+.select-option--selected{background:var(--brand-dim);color:var(--brand);font-weight:600}
+
+/* Checkbox & Radio */
+.check-group,.radio-group{display:flex;gap:16px;flex-wrap:wrap}
+.check-label,.radio-label{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary);cursor:pointer;line-height:1}
+.check-label input,.radio-label input{display:none}
+.check-box,.radio-circle{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color 0.15s var(--ease),background 0.15s var(--ease)}
+.radio-circle{border-radius:50%}
+@media(hover:hover)and(pointer:fine){.check-label:hover .check-box,.radio-label:hover .radio-circle{border-color:var(--text-tertiary)}}
+.check-label input:checked+.check-box{background:var(--brand);border-color:var(--brand)}
+.check-label input:checked+.check-box::after{content:'';width:6px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
+.radio-label input:checked+.radio-circle{border-color:var(--brand)}
+.radio-label input:checked+.radio-circle::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--brand)}
+
+/* Toggle */
+.toggle{width:38px;height:22px;border-radius:11px;background:var(--border);position:relative;cursor:pointer;border:none;flex-shrink:0;transition:background 0.2s var(--ease)}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:2px;right:18px;box-shadow:0 1px 3px rgba(0,0,0,0.12);transition:right 0.2s var(--ease)}
+.toggle--on{background:var(--brand)}
+.toggle--on::after{right:2px}
+
+/* Card */
+.card{background:var(--surface);border-radius:var(--radius-md);padding:24px;box-shadow:var(--shadow-sm);width:260px}
+.card-title{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.card-tags{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.card-tag{font-size:11px;font-weight:500;color:var(--text-secondary);background:var(--canvas);padding:3px 10px;border-radius:4px}
+
+/* Tag / Badge */
+.tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:4px;display:inline-flex;align-items:center;gap:4px}
+.tag--default{background:var(--canvas);color:var(--text-secondary)}
+.tag--brand{background:var(--brand-dim);color:var(--brand)}
+.tag--accent{background:var(--accent-dim);color:var(--accent)}
+.tag--warn{background:rgba(232,145,90,0.12);color:#C47A3A}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;font-size:13px;font-weight:500;padding:12px 20px;border-radius:var(--radius-sm);z-index:999;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:opacity 0.25s var(--ease),transform 0.25s var(--ease);pointer-events:none}
+.toast--show{opacity:1;transform:translateY(0)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.4);z-index:300;align-items:center;justify-content:center}
+.modal-overlay--open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:32px;width:400px;max-width:90vw;box-shadow:var(--shadow-lg)}
+.modal-title{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+.modal-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:20px}
+.modal-actions{display:flex;gap:10px}
+
+/* Tooltip */
+.tooltip-wrap{position:relative;display:inline-flex}
+.tooltip-trigger{font-size:14px;color:var(--brand);border-bottom:1px dashed var(--brand-dim);cursor:help}
+.tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-size:12px;padding:6px 12px;border-radius:4px;white-space:nowrap;z-index:200;pointer-events:none}
+.tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--brand)}
+.tooltip-wrap:hover .tooltip{display:block;animation:tooltipIn 0.2s var(--ease)}
+@keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Progress */
+.progress{height:6px;background:var(--canvas);border-radius:3px;overflow:hidden;width:200px}
+.progress-fill{height:100%;background:var(--brand);border-radius:3px;transition:width 0.4s var(--ease)}
+.progress-text{font-size:12px;color:var(--text-tertiary);margin-top:4px}
+
+/* Skeleton */
+.skeleton{background:linear-gradient(90deg,var(--canvas) 25%,var(--border) 50%,var(--canvas) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-line{height:12px;margin-bottom:8px;width:100%}
+.skeleton-line--short{width:60%}
+
+/* Nav */
+.nav-bar{display:flex;align-items:center;gap:24px;padding:12px 20px;background:var(--surface);border-radius:var(--radius-md);width:100%}
+.nav-item{font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;padding:4px 0;text-decoration:none;transition:color 0.15s var(--ease);position:relative}
+.nav-item::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background:var(--brand);transform:scaleX(0);transition:transform 0.2s var(--ease)}
+@media(hover:hover)and(pointer:fine){.nav-item:hover{color:var(--text-primary)}.nav-item:hover::after{transform:scaleX(1)}}
+.nav-item--active{color:var(--brand)}.nav-item--active::after{transform:scaleX(1)}
+
+@media(max-width:640px){.section-demo{flex-direction:column;align-items:stretch}.input-group{min-width:auto}.select-wrap{min-width:auto}.card{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="page-head">
+    <h1 class="page-title">组件库</h1>
+    <p class="page-desc">遵循 NiceUI 规则实现的 UI 组件示例。每个组件包含完整交互状态。</p>
+  </div>
+
+  <!-- Button -->
+  <div class="section">
+    <h2 class="section-title">按钮 Button</h2>
+    <div class="section-demo">
+      <button class="btn btn--primary">主要按钮</button>
+      <button class="btn btn--secondary">次要按钮</button>
+      <button class="btn btn--text">文字按钮</button>
+      <button class="btn btn--primary btn--disabled">禁用</button>
+      <button class="btn btn--primary btn--loading">加载中</button>
+      <button class="btn btn--primary btn-sm">小按钮</button>
+      <button class="btn btn--primary btn-lg">大按钮</button>
+      <button class="btn btn--primary"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0V14M0 7H14" stroke="currentColor" stroke-width="1.5"/></svg>带图标</button>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="section">
+    <h2 class="section-title">输入框 Input</h2>
+    <div class="section-demo">
+      <div class="input-group"><label class="input-label">默认无边框</label><input class="input" type="text" placeholder="请输入..."></div>
+      <div class="input-group"><label class="input-label">聚焦状态</label><input class="input" type="text" placeholder="点击我" value="已输入内容"></div>
+      <div class="input-group"><label class="input-label">有边框模式</label><input class="input input--bordered" type="text" placeholder="搜索..."></div>
+      <div class="input-group"><label class="input-label">禁用状态</label><input class="input input--disabled" type="text" value="不可编辑" disabled></div>
+    </div>
+  </div>
+
+  <!-- Select -->
+  <div class="section">
+    <h2 class="section-title">下拉选择 Select</h2>
+    <div class="section-demo">
+      <div class="select-wrap" id="selectDemo">
+        <button class="select-trigger" id="selectTrigger">选择分类</button>
+        <div class="select-panel" id="selectPanel">
+          <div class="select-option" data-value="all">全部</div>
+          <div class="select-option select-option--selected" data-value="design">设计</div>
+          <div class="select-option" data-value="dev">开发</div>
+          <div class="select-option" data-value="product">产品</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkbox & Radio -->
+  <div class="section">
+    <h2 class="section-title">复选框 / 单选框</h2>
+    <div class="section-demo">
+      <div class="check-group">
+        <label class="check-label"><input type="checkbox" checked><span class="check-box"></span>已选中</label>
+        <label class="check-label"><input type="checkbox"><span class="check-box"></span>未选中</label>
+        <label class="check-label"><input type="checkbox"><span class="check-box"></span>选项三</label>
+      </div>
+      <div class="radio-group">
+        <label class="radio-label"><input type="radio" name="demo" checked><span class="radio-circle"></span>选项 A</label>
+        <label class="radio-label"><input type="radio" name="demo"><span class="radio-circle"></span>选项 B</label>
+        <label class="radio-label"><input type="radio" name="demo"><span class="radio-circle"></span>选项 C</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle -->
+  <div class="section">
+    <h2 class="section-title">开关 Toggle</h2>
+    <div class="section-demo">
+      <button class="toggle toggle--on" id="toggleDemo" aria-label="开关"></button>
+      <span style="font-size:13px;color:var(--text-secondary)" id="toggleLabel">已开启</span>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <div class="section">
+    <h2 class="section-title">标签 Tag</h2>
+    <div class="section-demo">
+      <span class="tag tag--default">默认</span>
+      <span class="tag tag--brand">品牌</span>
+      <span class="tag tag--accent">强调</span>
+      <span class="tag tag--warn">警告</span>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="section">
+    <h2 class="section-title">卡片 Card</h2>
+    <div class="section-demo">
+      <div class="card">
+        <div class="card-title">卡片标题</div>
+        <div class="card-desc">卡片用于展示独立的内容对象，包含标题、描述和标签信息。</div>
+        <div class="card-tags"><span class="tag tag--brand">标签一</span><span class="tag tag--default">标签二</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="section">
+    <h2 class="section-title">导航 Navigation</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <nav class="nav-bar">
+        <a href="#" class="nav-item nav-item--active">首页</a>
+        <a href="#" class="nav-item">产品</a>
+        <a href="#" class="nav-item">服务</a>
+        <a href="#" class="nav-item">关于</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Skeleton -->
+  <div class="section">
+    <h2 class="section-title">骨架屏 Skeleton</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch;gap:8px;">
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line" style="width:80%"></div>
+      <div class="skeleton skeleton-line skeleton-line--short"></div>
+    </div>
+  </div>
+
+  <!-- Modal + Toast -->
+  <div class="section">
+    <h2 class="section-title">弹窗 / 提示</h2>
+    <div class="section-demo">
+      <button class="btn btn--primary" id="modalBtn">打开弹窗</button>
+      <button class="btn btn--secondary" id="toastBtn">显示 Toast</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 class="modal-title">确认操作</h3>
+    <p class="modal-desc">你是否确定要执行此操作？该操作不可撤销。</p>
+    <div class="modal-actions">
+      <button class="btn btn--primary" id="modalConfirm">确认</button>
+      <button class="btn btn--secondary" id="modalCancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toastEl">操作成功</div>
+
+<script>
+document.querySelectorAll('.select-trigger').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();var p=this.nextElementSibling;p.classList.toggle('select-panel--open')})});
+document.querySelectorAll('.select-option').forEach(function(o){o.addEventListener('click',function(){var t=this.closest('.select-wrap').querySelector('.select-trigger');var v=this.textContent;var firstChild=t.firstChild;t.insertBefore(document.createTextNode(v),firstChild);if(t.firstChild&&t.firstChild.nodeType===3){t.firstChild.textContent=v}else{t.textContent=v};t.closest('.select-wrap').querySelectorAll('.select-option').forEach(function(opt){opt.classList.remove('select-option--selected')});this.classList.add('select-option--selected');var p=this.closest('.select-panel');if(p)p.classList.remove('select-panel--open')})});
+document.addEventListener('click',function(){document.querySelectorAll('.select-panel--open').forEach(function(p){p.classList.remove('select-panel--open')})});
+
+var toggle=document.getElementById('toggleDemo');var toggleLabel=document.getElementById('toggleLabel');
+toggle.addEventListener('click',function(){this.classList.toggle('toggle--on');toggleLabel.textContent=this.classList.contains('toggle--on')?'已开启':'已关闭'});
+
+var modalOverlay=document.getElementById('modalOverlay');
+document.getElementById('modalBtn').addEventListener('click',function(){modalOverlay.classList.add('modal-overlay--open')});
+document.getElementById('modalConfirm').addEventListener('click',function(){modalOverlay.classList.remove('modal-overlay--open');showToast('已确认')});
+document.getElementById('modalCancel').addEventListener('click',function(){modalOverlay.classList.remove('modal-overlay--open')});
+modalOverlay.addEventListener('click',function(e){if(e.target===this)this.classList.remove('modal-overlay--open')});
+
+function showToast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('toast--show');setTimeout(function(){t.classList.remove('toast--show')},2200)}
+document.getElementById('toastBtn').addEventListener('click',function(){showToast('这是一条提示消息')});
+</script>
+</body>
+</html>
