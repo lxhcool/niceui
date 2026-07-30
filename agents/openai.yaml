@@ -1,0 +1,4 @@
+interface:
+  display_name: "NiceUI"
+  short_description: "按产品类型生成真实、非模板化且经验证的响应式界面"
+  default_prompt: "使用 $niceui 先识别产品载体与页面职责，提取产品指纹并选择合适结构，使用真实内容完成可操作、响应式且经视觉验证的最终界面。"
