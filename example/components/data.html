@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>组件库 — 数据</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+  <div class="page-head">
+    <h1 class="page-title">NiceUI 组件库</h1>
+    <div class="page-nav">
+      <a href="index.html">基础</a>
+      <a href="feedback.html">反馈</a>
+      <a href="data.html" class="active">数据</a>
+      <a href="layout.html">布局</a>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="section">
+    <h2 class="section-title">表格 Table</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch;padding:0">
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>姓名</th><th>角色</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td>张明</td><td>管理员</td><td><span class="badge-dot badge-dot--green"></span> 在线</td><td><a href="#" class="tag tag--default tag--link">编辑</a></td></tr>
+            <tr><td>陈晓芸</td><td>编辑</td><td><span class="badge-dot badge-dot--green"></span> 在线</td><td><a href="#" class="tag tag--default tag--link">编辑</a></td></tr>
+            <tr><td>李浩</td><td>用户</td><td><span class="badge-dot badge-dot--warn"></span> 离线</td><td><a href="#" class="tag tag--default tag--link">编辑</a></td></tr>
+            <tr><td>王雨桐</td><td>用户</td><td><span class="badge-dot badge-dot--danger"></span> 封禁</td><td><a href="#" class="tag tag--default tag--link">编辑</a></td></tr>
+            <tr><td>赵子轩</td><td>编辑</td><td><span class="badge-dot badge-dot--green"></span> 在线</td><td><a href="#" class="tag tag--default tag--link">编辑</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="section">
+    <h2 class="section-title">卡片网格 Card Grid</h2>
+    <div class="section-demo" style="gap:12px">
+      <div class="card"><div class="card-title">设计系统</div><div class="card-desc">构建可复用的组件库和设计规范。</div><div style="display:flex;gap:4px;margin-top:10px"><span class="tag tag--brand">UI</span><span class="tag tag--default">规范</span></div></div>
+      <div class="card"><div class="card-title">前端架构</div><div class="card-desc">项目结构、打包工具和性能优化。</div><div style="display:flex;gap:4px;margin-top:10px"><span class="tag tag--accent">工程</span><span class="tag tag--default">优化</span></div></div>
+      <div class="card"><div class="card-title">用户研究</div><div class="card-desc">用户访谈、可用性测试和数据分析。</div><div style="display:flex;gap:4px;margin-top:10px"><span class="tag tag--brand">研究</span><span class="tag tag--default">数据</span></div></div>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <div class="section">
+    <h2 class="section-title">徽标 Badge</h2>
+    <div class="section-demo">
+      <span>通知 <span class="badge" style="margin-left:4px">3</span></span>
+      <span>消息 <span class="badge" style="margin-left:4px">12</span></span>
+      <span>待处理 <span class="badge" style="margin-left:4px">99+</span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px">在线 <span class="badge-dot badge-dot--green"></span></span>
+      <span style="display:inline-flex;align-items:center;gap:6px">离线 <span class="badge-dot badge-dot--warn"></span></span>
+    </div>
+  </div>
+
+  <!-- Avatars -->
+  <div class="section">
+    <h2 class="section-title">头像 Avatar</h2>
+    <div class="section-demo">
+      <div class="avatar avatar--sm">张</div>
+      <div class="avatar">李</div>
+      <div class="avatar avatar--lg">王</div>
+      <div style="display:flex;align-items:center;gap:8px"><div class="avatar">陈</div><span style="font-size:13px;color:var(--text-primary)">陈晓芸</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

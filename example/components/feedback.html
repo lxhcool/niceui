@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>组件库 — 反馈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page">
+  <div class="page-head">
+    <h1 class="page-title">NiceUI 组件库</h1>
+    <div class="page-nav">
+      <a href="index.html">基础</a>
+      <a href="feedback.html" class="active">反馈</a>
+      <a href="data.html">数据</a>
+      <a href="layout.html">布局</a>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="section">
+    <h2 class="section-title">提示 Toast</h2>
+    <div class="section-demo">
+      <button class="btn btn--primary" onclick="showToast('操作成功')">成功提示</button>
+      <button class="btn btn--secondary" onclick="showToast('已添加到购物车')">添加提示</button>
+      <button class="btn btn--text" onclick="showToast('网络异常，请稍后重试')">异常提示</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="section">
+    <h2 class="section-title">弹窗 Modal</h2>
+    <div class="section-demo">
+      <button class="btn btn--primary" id="modalBtn1">确认弹窗</button>
+      <button class="btn btn--secondary" id="modalBtn2">输入弹窗</button>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="section">
+    <h2 class="section-title">提示 Tooltip</h2>
+    <div class="section-demo">
+      <div class="tooltip-wrap" style="padding:8px 0">
+        鼠标悬停查看详情
+        <div class="tooltip">这是 tooltip 提示内容</div>
+      </div>
+      <div class="tooltip-wrap" style="padding:8px 0">
+        批量操作说明
+        <div class="tooltip">可同时选择多个项目进行操作</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div class="section">
+    <h2 class="section-title">提示条 Alert</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <div class="alert alert--info">ℹ 系统将在 30 分钟后进行维护更新。</div>
+      <div class="alert alert--warn">⚠ 当前网络连接不稳定，部分功能可能受限。</div>
+      <div class="alert alert--danger">✕ 保存失败，请检查文件权限后重试。</div>
+    </div>
+  </div>
+
+  <!-- Skeleton -->
+  <div class="section">
+    <h2 class="section-title">骨架屏 Skeleton</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch;gap:4px;max-width:360px">
+      <div class="skeleton skeleton-block"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line" style="width:85%"></div>
+      <div class="skeleton skeleton-line skeleton-line--short"></div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="section">
+    <h2 class="section-title">进度条 Progress</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch;max-width:360px">
+      <div class="progress"><div class="progress-fill" style="width:65%"></div></div>
+      <span class="progress-text">65% 已完成</span>
+      <div style="margin-top:8px"><div class="progress"><div class="progress-fill" style="width:30%"></div></div><span class="progress-text">上传中 30%</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal 1 -->
+<div class="modal-overlay" id="modal1">
+  <div class="modal">
+    <h3 class="modal-title">确认删除</h3>
+    <p class="modal-desc">删除后数据不可恢复，是否继续？</p>
+    <div class="modal-actions">
+      <button class="btn btn--primary" onclick="closeModal('modal1');showToast('已删除')">确认</button>
+      <button class="btn btn--secondary" onclick="closeModal('modal1')">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal-overlay" id="modal2">
+  <div class="modal">
+    <h3 class="modal-title">新建项目</h3>
+    <p class="modal-desc">请输入项目名称和描述。</p>
+    <div style="margin-bottom:12px"><input class="input" type="text" placeholder="项目名称" style="margin-bottom:8px"><input class="input" type="text" placeholder="项目描述"></div>
+    <div class="modal-actions">
+      <button class="btn btn--primary" onclick="closeModal('modal2');showToast('创建成功')">创建</button>
+      <button class="btn btn--secondary" onclick="closeModal('modal2')">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toastEl">操作成功</div>
+
+<script>
+function showToast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('toast--show');setTimeout(function(){t.classList.remove('toast--show')},2200)}
+function openModal(id){var o=document.getElementById(id);o.classList.add('modal-overlay--open')}
+function closeModal(id){var o=document.getElementById(id);o.classList.add('modal-overlay--exit');setTimeout(function(){o.classList.remove('modal-overlay--exit','modal-overlay--open')},150)}
+document.getElementById('modalBtn1').addEventListener('click',function(){openModal('modal1')});
+document.getElementById('modalBtn2').addEventListener('click',function(){openModal('modal2')});
+document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)closeModal(this.id)})});
+</script>
+</body>
+</html>

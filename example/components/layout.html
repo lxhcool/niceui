@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>组件库 — 布局</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border-light);width:100%}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;border-bottom:2px solid transparent;transition:color 0.15s var(--ease),border-color 0.15s var(--ease)}
+@media(hover:hover)and(pointer:fine){.tab:hover{color:var(--text-primary)}}
+.tab--active{color:var(--brand);border-bottom-color:var(--brand)}
+.accordion{width:100%}
+.accordion-item{border-bottom:1px solid var(--border-light)}
+.accordion-header{padding:14px 0;font-size:14px;font-weight:500;color:var(--text-primary);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color 0.15s var(--ease)}
+.accordion-header:hover{color:var(--brand)}
+.accordion-header::after{content:'';width:10px;height:6px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235C5650' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;transition:transform 0.2s var(--ease)}
+.accordion-item--open .accordion-header::after{transform:rotate(180deg)}
+.accordion-body{overflow:hidden;max-height:0;transition:max-height 0.25s var(--ease)}
+.accordion-item--open .accordion-body{max-height:200px}
+.accordion-content{padding:0 0 14px;font-size:13px;color:var(--text-secondary);line-height:1.6}
+.breadcrumb{display:flex;gap:8px;align-items:center;font-size:13px}
+.breadcrumb a{color:var(--text-secondary);text-decoration:none;transition:color 0.15s var(--ease)}
+.breadcrumb a:hover{color:var(--brand)}
+.breadcrumb span{color:var(--text-primary)}
+.breadcrumb-sep{color:var(--text-tertiary);font-size:10px}
+
+.pagination{display:flex;gap:4px;align-items:center}
+.pg-item{min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:4px;cursor:pointer;transition:background 0.15s var(--ease),color 0.15s var(--ease)}
+@media(hover:hover)and(pointer:fine){.pg-item:hover{background:var(--canvas);color:var(--text-primary)}}
+.pg-item--active{background:var(--brand);color:#fff}.pg-item--active:hover{background:var(--brand-hover)!important}
+.pg-ellipsis{min-width:32px;text-align:center;font-size:13px;color:var(--text-tertiary)}
+
+.steps{display:flex;gap:0;width:100%}
+.step{flex:1;text-align:center;position:relative;padding:0 0 8px;font-size:12px;color:var(--text-tertiary)}
+.step::before{content:'';display:block;width:24px;height:24px;border-radius:50%;background:var(--border-light);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600}
+.step--done::before{background:var(--brand);content:'✓'}
+.step--active::before{background:var(--brand);content:attr(data-num)}
+.step::after{content:'';position:absolute;top:12px;left:calc(50% + 16px);right:calc(-50% + 16px);height:2px;background:var(--border-light)}
+.step:last-child::after{display:none}
+.step--done::after{background:var(--brand)}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="page-head">
+    <h1 class="page-title">NiceUI 组件库</h1>
+    <div class="page-nav">
+      <a href="index.html">基础</a>
+      <a href="feedback.html">反馈</a>
+      <a href="data.html">数据</a>
+      <a href="layout.html" class="active">布局</a>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="section">
+    <h2 class="section-title">导航 Nav</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <nav class="nav-bar">
+        <a href="#" class="nav-item nav-item--active">首页</a>
+        <a href="#" class="nav-item">探索</a>
+        <a href="#" class="nav-item">文库</a>
+        <a href="#" class="nav-item">关于</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="section">
+    <h2 class="section-title">标签页 Tabs</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <div class="tabs">
+        <span class="tab tab--active">推荐</span>
+        <span class="tab">热门</span>
+        <span class="tab">最新</span>
+        <span class="tab">关注</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accordion -->
+  <div class="section">
+    <h2 class="section-title">手风琴 Accordion</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <div class="accordion">
+        <div class="accordion-item accordion-item--open">
+          <div class="accordion-header">什么是 NiceUI？</div>
+          <div class="accordion-body"><div class="accordion-content">NiceUI 是一套面向网页与应用界面的设计、实现和审查工作流，让 AI 模型产出质量稳定的真实界面。</div></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">如何安装？</div>
+          <div class="accordion-body"><div class="accordion-content">通过 npm 安装：<code>npm install ui-nice-skill</code>，或在 AI 对话中直接引用 SKILL.md。</div></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">支持哪些平台？</div>
+          <div class="accordion-body"><div class="accordion-content">Web（CSS 原生）、React/Vue/Tailwind、Flutter 各有一套独立实现规则。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="section">
+    <h2 class="section-title">面包屑 Breadcrumb</h2>
+    <div class="section-demo">
+      <div class="breadcrumb">
+        <a href="#">首页</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="#">文档</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>组件库</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="section">
+    <h2 class="section-title">分页 Pagination</h2>
+    <div class="section-demo">
+      <div class="pagination">
+        <span class="pg-item">‹</span>
+        <span class="pg-item pg-item--active">1</span>
+        <span class="pg-item">2</span>
+        <span class="pg-item">3</span>
+        <span class="pg-ellipsis">...</span>
+        <span class="pg-item">12</span>
+        <span class="pg-item">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="section">
+    <h2 class="section-title">步骤条 Steps</h2>
+    <div class="section-demo" style="flex-direction:column;align-items:stretch">
+      <div class="steps">
+        <div class="step step--done">创建账号</div>
+        <div class="step step--done">填写信息</div>
+        <div class="step step--active" data-num="3">确认提交</div>
+        <div class="step">完成</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Accordion
+document.querySelectorAll('.accordion-header').forEach(function(h){h.addEventListener('click',function(){var item=this.closest('.accordion-item');item.classList.toggle('accordion-item--open')})});
+// Tabs
+document.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){this.closest('.tabs').querySelectorAll('.tab').forEach(function(a){a.classList.remove('tab--active')});this.classList.add('tab--active')})});
+</script>
+</body>
+</html>
