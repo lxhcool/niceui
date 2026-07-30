@@ -96,10 +96,12 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 /* 箭头: 绝对值 right:12px，不居中 */
 .select-trigger::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:6px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235C5650' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;background-size:contain}
 
-/* 规则 11: 浮层动效 — 淡入+位移 */
+/* 规则 11: 浮层动效 — 进入+退出动画 */
 .select-panel{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border-radius:6px;box-shadow:var(--shadow-md);z-index:200;padding:4px;max-height:200px;overflow-y:auto}
 .select-panel--open{display:block;animation:panelIn 0.2s var(--ease)}
+.select-panel--exit{display:block;animation:panelOut 0.15s var(--ease) forwards}
 @keyframes panelIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes panelOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-4px)}}
 .select-option{padding:8px 12px;font-size:13px;color:var(--text-secondary);border-radius:4px;cursor:pointer;transition:background 0.15s var(--ease)}
 @media(hover:hover)and(pointer:fine){.select-option:hover{background:var(--canvas);color:var(--text-primary)}}
 .select-option--selected{background:var(--brand-dim);color:var(--brand);font-weight:600}
@@ -145,9 +147,13 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 /* ========== 规则 11: Modal 浮层动效 ========== */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.4);z-index:300;align-items:center;justify-content:center}
 .modal-overlay--open{display:flex;animation:overlayIn 0.2s var(--ease)}
+.modal-overlay--exit{display:flex;animation:overlayOut 0.15s var(--ease) forwards}
 .modal{background:var(--surface);border-radius:14px;padding:32px;width:400px;max-width:90vw;box-shadow:var(--shadow-lg);animation:modalIn 0.25s var(--ease)}
+.modal-overlay--exit .modal{animation:modalOut 0.15s var(--ease) forwards}
 @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+@keyframes overlayOut{from{opacity:1}to{opacity:0}}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes modalOut{from{opacity:1;transform:scale(1) translateY(0)}to{opacity:0;transform:scale(0.95) translateY(8px)}}
 .modal-title{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
 .modal-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:20px}
 .modal-actions{display:flex;gap:10px}
@@ -277,16 +283,17 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 <div class="toast" id="toastEl">操作成功</div>
 
 <script>
-document.querySelectorAll('.select-trigger').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();var p=this.nextElementSibling;p.classList.toggle('select-panel--open')})});
-document.querySelectorAll('.select-option').forEach(function(o){o.addEventListener('click',function(){var t=this.closest('.select-wrap').querySelector('.select-trigger');t.textContent=this.textContent;this.closest('.select-wrap').querySelectorAll('.select-option').forEach(function(a){a.classList.remove('select-option--selected')});this.classList.add('select-option--selected');this.closest('.select-panel').classList.remove('select-panel--open')})});
-document.addEventListener('click',function(){document.querySelectorAll('.select-panel--open').forEach(function(p){p.classList.remove('select-panel--open')})});
+function hidePanel(p){p.classList.remove('select-panel--open');p.classList.add('select-panel--exit');setTimeout(function(){p.classList.remove('select-panel--exit')},150)}
+function closeModal(){var o=document.getElementById('modalOverlay');o.classList.remove('modal-overlay--open');o.classList.add('modal-overlay--exit');setTimeout(function(){o.classList.remove('modal-overlay--exit')},150)}
+document.querySelectorAll('.select-trigger').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();var p=this.nextElementSibling;if(p.classList.contains('select-panel--open')){hidePanel(p)}else{p.classList.add('select-panel--open')}})});
+document.querySelectorAll('.select-option').forEach(function(o){o.addEventListener('click',function(){if(!this.closest('.select-panel'))return;var t=this.closest('.select-wrap').querySelector('.select-trigger');t.textContent=this.textContent;this.closest('.select-wrap').querySelectorAll('.select-option').forEach(function(a){a.classList.remove('select-option--selected')});this.classList.add('select-option--selected');hidePanel(this.closest('.select-panel'))})});
+document.addEventListener('click',function(){document.querySelectorAll('.select-panel--open').forEach(function(p){hidePanel(p)})});
 var toggle=document.getElementById('toggleDemo'),toggleLabel=document.getElementById('toggleLabel');
 toggle.addEventListener('click',function(){this.classList.toggle('toggle--on');toggleLabel.textContent=this.classList.contains('toggle--on')?'已开启':'已关闭'});
-var modalOverlay=document.getElementById('modalOverlay');
-document.getElementById('modalBtn').addEventListener('click',function(){modalOverlay.classList.add('modal-overlay--open')});
-document.getElementById('modalConfirm').addEventListener('click',function(){modalOverlay.classList.remove('modal-overlay--open');showToast('已确认')});
-document.getElementById('modalCancel').addEventListener('click',function(){modalOverlay.classList.remove('modal-overlay--open')});
-modalOverlay.addEventListener('click',function(e){if(e.target===this)this.classList.remove('modal-overlay--open')});
+document.getElementById('modalBtn').addEventListener('click',function(){document.getElementById('modalOverlay').classList.add('modal-overlay--open')});
+document.getElementById('modalConfirm').addEventListener('click',function(){closeModal();showToast('已确认')});
+document.getElementById('modalCancel').addEventListener('click',closeModal);
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
 function showToast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('toast--show');setTimeout(function(){t.classList.remove('toast--show')},2200)}
 document.getElementById('toastBtn').addEventListener('click',function(){showToast('这是一条提示消息')});
 </script>

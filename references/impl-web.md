@@ -51,7 +51,7 @@
 
 10. **过渡品质**：所有 hover、focus、active 状态变化必须使用平滑过渡，`transition` 时长控制在 `150ms–250ms`，缓动函数使用 `ease` 或 `cubic-bezier(0.33, 1, 0.68, 1)`。不允许无过渡的瞬间状态跳变。同一页面的过渡时长保持一致。
 
-11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。Modal 遮罩必须有渐入/渐出动画，不可瞬间出现。Select 下拉面板同样需要淡入（opacity + translateY）动画。
+11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。由于无法在 `display: none` 上运行动画，退出动画必须通过 JS 控制：先添加退出动画 class → 等待动画结束后（`setTimeout` 匹配动画时长）→ 再隐藏元素。Modal 遮罩必须有渐入/渐出动画。Select 下拉面板同样需要淡入/淡出（opacity + translateY）。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
 13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
