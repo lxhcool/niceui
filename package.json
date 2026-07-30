@@ -18,7 +18,10 @@
     "frontend",
     "design-guidelines"
   ],
-  "license": "MIT",
+  "bin": {
+  "niceui": "bin/niceui.js"
+},
+"license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lxhcool/niceui.git"

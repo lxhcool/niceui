@@ -5,7 +5,14 @@
 ## 安装
 
 ```bash
+# 本地安装（推荐用于项目）
 npm install ui-nice-skill
+
+# 全局安装（终端直接输出 skill 内容）
+npm install -g ui-nice-skill
+niceui                     # 输出完整 SKILL.md
+niceui --ref / -r          # 列出可用参考文档
+niceui --dir / -d          # 输出安装路径
 ```
 
 ## 使用
