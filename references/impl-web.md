@@ -60,7 +60,7 @@
 15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
     - **默认**（rest）：清晰可辨认为交互元素
     - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`。按钮、输入框、Select 触发器、下拉选项等所有表单控件必须有悬停效果，不允许无悬停反馈
-    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover。焦点环颜色**必须使用品牌色或强调色的实色**（非 `rgba` 透明度版本），确保在任何背景色上都有足够辨识度。输入框类元素使用 `outline-offset: -2px` 使焦点环显示在内部。
+    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover。焦点环颜色**必须使用品牌色或强调色的实色**（非 `rgba` 透明度版本），确保在任何背景色上都有足够辨识度。输入框类元素使用 `box-shadow: inset 0 0 0 1px var(--brand)` 实现细内边框聚焦效果（1px 实色），替代 outline 或粗阴影。
     - **按下/激活**（active）：按钮必须有按下状态反馈（`transform: scale(0.97)` 或背景加深），时长 ≤ 100ms，不允许无 active 效果的按钮。非按钮元素不需要 active 状态
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
