@@ -54,6 +54,17 @@
 11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
+13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
+14. **卡片/列表项内容不被截断**：网格或列表中的每个项目必须能完整显示其内部内容（图片、标题、描述、标签等），不允许因 `overflow: hidden`、固定高度不足或 `max-height` 限制导致内容被裁剪或被相邻项目遮挡。如果内容过多应使用 `min-height` 确保基础可见区域，或允许项目高度随内容自适应（`height: auto`）。图片容器固定宽高比，文字区域不设固定高度。
+15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
+    - **默认**（rest）：清晰可辨认为交互元素
+    - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`
+    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover
+    - **按下**（active）：瞬间反馈（scale 微缩或背景加深），时长 ≤ 100ms
+    - **禁用**（disabled）：降低不透明度至 0.4–0.5，移除交互指针，不加额外装饰色
+    - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
+    - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
+    - 缺少任一状态即为交互不完整，判定为不合格
 
 ## 风格推力
 
@@ -85,6 +96,7 @@
 ☐ 至少一个响应式断点（max-width ≤ 768px）
 ☐ 卡片/按钮/弹窗均有明确 border-radius（含 0）
 ☐ 图片容器有 aspect-ratio 加载前占位色
+☐ 交互状态完整（rest/hover/focus/active/disabled/loading）
 ☐ 表单控件已自定义，无原生 select/checkbox/date
 ☐ 至少一个非标准布局（错位/不对称/溢出等）
 ☐ 至少两种字体角色
@@ -101,8 +113,12 @@
 
 - 使用语义 CSS 变量命名（`--canvas`、`--brand`、`--text-primary` 等），不写死十六进制色值。
 - 水平和垂直容器对齐使用 Flexbox / Grid，不使用 `position: absolute` 修补布局。
+- **按钮图标与文字必须垂直居中**：含图标的按钮使用 `display: inline-flex` 或 `flex`，配合 `align-items: center` 确保图标和文字在同一基线上。图标尺寸与字号匹配（图标 px ≈ 字号 px × 1.1–1.2）。不对齐即判定为布局缺陷。
 - 纯装饰元素添加 `aria-hidden="true"`。
 - 交互元素使用 `cursor: pointer`，但仅限可点击元素。
 - 使用一致的间距序列（4/8/12/16/24/32/48/64px），不随意产生接近但不同的间距值。
 - 字体加载使用 `font-display: swap` 或 `display=swap` 参数。
+- **磨砂效果（`backdrop-filter: blur`）仅用于浮层、弹窗、固定栏和导航栏**。不应用于普通卡片、按钮、输入框或页面背景。磨砂效果必须有半透明前景色配合（`background: rgba(...)`），不可直接 blur 在无背景色的元素上。
+- **输入框首选无边框模式**：输入框、搜索框、下拉触发器优先使用背景色区分（`background` 与 `--canvas` 或 `--surface` 有差异），不加边框或仅使用底部线（`border-bottom: 1px solid`）。避免同时使用背景色 + 四周边框 + 内阴影造成的双层边框效果。只有在表单密集需强区分、或浅色背景上输入框确实难以辨认时才使用完整边框。
+- **阴影克制**：`box-shadow` 最多使用 3 级（小/中/大），不允许单层阴影偏移超过 8px 或模糊超过 32px。阴影色使用低色度颜色（`rgba(0,0,0,0.06–0.12)`），不使用时纯黑阴影。不允许每个容器都带阴影——优先使用背景色差和留白区分层级。
 - 图标库推荐（按优先级）：**Lucide**（开源、一致 24px 网格、支持 SVG 内联和 sprite）、**Heroicons**（开源、24px 网格、线性和实心两套）、**Feather Icons**（开源、简洁线性）。不推荐使用 Font Awesome（体积大、风格老旧）。直接从图标库官网复制 SVG 代码是最轻量的方式。
