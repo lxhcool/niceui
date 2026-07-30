@@ -57,7 +57,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 /* 聚焦: :focus-visible 由全局控制 */
 
 /* 禁用: 低不透明度 + not-allowed */
-.btn--disabled{opacity:0.45;cursor:not-allowed;pointer-events:none}
+.btn--disabled{opacity:0.45;cursor:not-allowed}
 
 /* 加载: 文字隐藏 + spinner */
 .btn--loading{position:relative;color:transparent!important;pointer-events:none}
@@ -84,7 +84,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 /* focus: 品牌色 inset shadow 替代超浅色 */
 .input:focus{background:var(--surface);box-shadow:inset 0 0 0 2px var(--brand-dim)}
 /* 禁用: 灰底 + not-allowed */
-.input--disabled{opacity:0.45;cursor:not-allowed;pointer-events:none;background:var(--border-light);user-select:none}
+.input--disabled{opacity:0.45;cursor:not-allowed;background:var(--border-light);user-select:none}
 
 /* ========== 自定义 Select（Dropdown模式） ========== */
 /* 规则 8: 不可用原生select，用触发器+面板模式 */
