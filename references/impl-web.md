@@ -59,7 +59,7 @@
 15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
     - **默认**（rest）：清晰可辨认为交互元素
     - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`
-    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover
+    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover。焦点环颜色必须使用品牌色或强调色的半透明版本（`rgba` 不透明度 ≥ 0.25），确保在背景色上有足够辨识度。不允许使用不透明度 ≤ 0.15 的超浅色作为焦点环。
     - **按下**（active）：瞬间反馈（scale 微缩或背景加深），时长 ≤ 100ms
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，`pointer-events: none`，不加额外装饰色
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击

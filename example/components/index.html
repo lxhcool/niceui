@@ -14,14 +14,14 @@
 /* 规则 6-1: Reset + :focus:not(:focus-visible) */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :focus:not(:focus-visible){outline:none}
-/* 规则 15: :focus-visible 自定义焦点环 */
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* 规则 15: :focus-visible 自定义焦点环 — 使用品牌色（非超浅色） */
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
 /* 规则 6-2: 排版基线 */
 body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text-primary);background:var(--canvas);-webkit-font-smoothing:antialiased;padding:0 0 80px}
 
 /* 规则 6-3: 语义变量 — 共9个，含表面色差异 */
-:root{--canvas:#F8F6F3;--surface:#FFFFFF;--surface-hover:#F3F1ED;--brand:#2D4A3E;--brand-hover:#243D33;--brand-dim:rgba(45,74,62,0.12);--accent:#C47A5A;--accent-hover:#B06A4A;--accent-dim:rgba(196,122,90,0.15);--text-primary:#1C1A18;--text-secondary:#5C5650;--text-tertiary:#9C948E;--border:#D8D2CA;--border-light:#E8E3DC;--shadow-sm:0 1px 3px rgba(28,26,24,0.05);--shadow-md:0 4px 16px rgba(28,26,24,0.06);--shadow-lg:0 8px 32px rgba(28,26,24,0.08);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
+:root{--canvas:#F8F6F3;--surface:#FFFFFF;--surface-hover:#F3F1ED;--brand:#2D4A3E;--brand-hover:#243D33;--brand-dim:rgba(45,74,62,0.15);--accent:#C47A5A;--accent-hover:#B06A4A;--accent-dim:rgba(196,122,90,0.3);--text-primary:#1C1A18;--text-secondary:#5C5650;--text-tertiary:#9C948E;--border:#D8D2CA;--border-light:#E8E3DC;--shadow-sm:0 1px 3px rgba(28,26,24,0.05);--shadow-md:0 4px 16px rgba(28,26,24,0.06);--shadow-lg:0 8px 32px rgba(28,26,24,0.08);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
 
 /* 规则 4: prefers-reduced-motion */
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important}}
@@ -81,8 +81,8 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .input::placeholder{color:var(--text-tertiary)}
 /* hover: 背景微变 */
 @media(hover:hover)and(pointer:fine){.input:hover{background:var(--border-light)}}
-/* focus: inset shadow 避免双层边框 */
-.input:focus{background:var(--surface);box-shadow:inset 0 0 0 2px var(--accent-dim)}
+/* focus: 品牌色 inset shadow 替代超浅色 */
+.input:focus{background:var(--surface);box-shadow:inset 0 0 0 2px var(--brand-dim)}
 /* 禁用: 灰底 + not-allowed */
 .input--disabled{opacity:0.45;cursor:not-allowed;pointer-events:none;background:var(--border-light);user-select:none}
 
@@ -92,7 +92,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .select-wrap{position:relative;min-width:180px}
 .select-trigger{font-family:"Inter",system-ui,sans-serif;font-size:14px;padding:10px 36px 10px 14px;border:none;border-radius:6px;background:var(--canvas);color:var(--text-primary);cursor:pointer;width:100%;text-align:left;line-height:1.4;position:relative;transition:background 0.2s var(--ease)}
 @media(hover:hover)and(pointer:fine){.select-trigger:hover{background:var(--border-light)}}
-.select-trigger:focus{background:var(--surface);box-shadow:inset 0 0 0 2px var(--accent-dim);outline:none}
+.select-trigger:focus{background:var(--surface);box-shadow:inset 0 0 0 2px var(--brand-dim);outline:none}
 /* 箭头: 绝对值 right:12px，不居中 */
 .select-trigger::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:6px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235C5650' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;background-size:contain}
 
