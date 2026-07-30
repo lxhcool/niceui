@@ -51,7 +51,7 @@
 
 10. **过渡品质**：所有 hover、focus、active 状态变化必须使用平滑过渡，`transition` 时长控制在 `150ms–250ms`，缓动函数使用 `ease` 或 `cubic-bezier(0.33, 1, 0.68, 1)`。不允许无过渡的瞬间状态跳变。同一页面的过渡时长保持一致。
 
-11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。
+11. **浮层动效**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。Modal 遮罩必须有渐入/渐出动画，不可瞬间出现。Select 下拉面板同样需要淡入（opacity + translateY）动画。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
 13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
@@ -61,7 +61,7 @@
     - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`
     - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover
     - **按下**（active）：瞬间反馈（scale 微缩或背景加深），时长 ≤ 100ms
-    - **禁用**（disabled）：降低不透明度至 0.4–0.5，移除交互指针，不加额外装饰色
+    - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，`pointer-events: none`，不加额外装饰色
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
     - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
     - 缺少任一状态即为交互不完整，判定为不合格
@@ -119,8 +119,9 @@
 - 使用一致的间距序列（4/8/12/16/24/32/48/64px），不随意产生接近但不同的间距值。
 - 字体加载使用 `font-display: swap` 或 `display=swap` 参数。
 - **磨砂效果（`backdrop-filter: blur`）仅用于浮层、弹窗、固定栏和导航栏**。不应用于普通卡片、按钮、输入框或页面背景。磨砂效果必须有半透明前景色配合（`background: rgba(...)`），不可直接 blur 在无背景色的元素上。
-- **输入框首选无边框模式**：输入框、搜索框、下拉触发器优先使用背景色区分（`background` 与 `--canvas` 或 `--surface` 有差异），不加边框或仅使用底部线（`border-bottom: 1px solid`）。避免同时使用背景色 + 四周边框 + 内阴影造成的双层边框效果。只有在表单密集需强区分、或浅色背景上输入框确实难以辨认时才使用完整边框。
+- **输入框首选无边框模式**：输入框、搜索框、下拉触发器优先使用背景色区分（`background` 与 `--canvas` 或 `--surface` 有差异），不加边框或仅使用底部线。如使用有边框模式，聚焦时通过改变 `border-color` + `box-shadow` 提供反馈，但 `box-shadow` 色值必须使用 `rgba` 半透明色避免遮盖边框形成双层视觉。默认边框色与聚焦边框色的 HSL L 值差 ≥ 10%，确保对比可辨。
 - **表单控件统一无边框**：`<select>`、复选框、单选框、日期选择器等自定义控件同样优先使用背景色区分而非边框。自定义 select 触发器与输入框样式一致（背景色区分 + 底部线或无框），下拉面板使用阴影而非边框。
+- **Select 箭头固定右侧**：自定义 select 的箭头图标必须固定在触发器右侧边缘，与文字保持 8–12px 间距。不允许箭头紧贴文字或居中显示。使用 `position: absolute; right: 12px; top: 50%; transform: translateY(-50%)` 或等价的 Flexbox 方案。
 - **圆角使用双数**：所有 `border-radius` 值必须为双数（2、4、6、8、10、12、16、20、24 等），不允许奇数圆角（3、5、7、9、11px 等）。同一页面圆角层级控制在 2-3 级，且全部为双数。
 - **按钮首选填充模式**：主要按钮使用背景色填充（`background` + 无 `border` 或极淡边线），不使用描边按钮作为主要操作。次要按钮可使用描边或文字按钮形式。避免同时使用填充 + 粗边框 + 内阴影的堆叠效果。
 - **阴影克制**：`box-shadow` 最多使用 3 级（小/中/大），不允许单层阴影偏移超过 8px 或模糊超过 32px。阴影色使用低色度颜色（`rgba(0,0,0,0.06–0.12)`），不使用时纯黑阴影。不允许每个容器都带阴影——优先使用背景色差和留白区分层级。
