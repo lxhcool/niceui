@@ -114,7 +114,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 @keyframes modalOut{from{opacity:1;transform:scale(1) translateY(0)}to{opacity:0;transform:scale(0.95) translateY(8px)}}
 .modal-title{font-size:17px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
 .modal-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:20px}
-.modal-actions{display:flex;gap:10px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px}
 
 /* Toast */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--brand);color:#fff;font-size:13px;font-weight:500;padding:12px 20px;border-radius:6px;z-index:999;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:opacity 0.25s var(--ease),transform 0.25s var(--ease);pointer-events:none}
