@@ -76,6 +76,7 @@
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
 12b. **浮层与触发元素间距**：Select 下拉面板、Dropdown、Popover、Tooltip 等浮层与触发元素之间必须保留 4–8px 垂直间距（`top: calc(100% + 4px)` 或 `margin-top: 4px`），不允许紧贴触发元素无间距。
 13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
+13b. **Toast/消息提示位置**：网页的 Toast、消息提示、通知条必须显示在**页面顶部**（`position: fixed; top: 16-20px`），居中或右对齐，不允许放到底部。底部 Toast 会被固定播放器、操作栏、聊天输入框遮挡。消息条从上向下滑入（`transform: translateY(-8px) → 0` + `opacity`），退出反向滑出。
 14. **卡片/列表项内容不被截断**：网格或列表中的每个项目必须能完整显示其内部内容（图片、标题、描述、标签等），不允许因 `overflow: hidden`、固定高度不足或 `max-height` 限制导致内容被裁剪或被相邻项目遮挡。如果内容过多应使用 `min-height` 确保基础可见区域，或允许项目高度随内容自适应（`height: auto`）。图片容器固定宽高比，文字区域不设固定高度。
 
 15. **状态圆点/徽标样式统一**：状态指示点（`dot`、状态圆点）必须：
@@ -153,6 +154,7 @@
 ☐ 有微交互（非纯色变化，带 transition 150–250ms）
 ☐ 浮层有进入+退出动画（非 display 切换）
 ☐ 浮层定位正确（不超出视口，有 position 关系）
+☐ Toast/消息提示显示在顶部（非底部）
 ☐ 移除了默认 outline（使用 :focus-visible 替代）
 ☐ 状态圆点为正圆且语义色对比足够
 ☐ 列表右侧列对齐（右边缘成连续竖线）
