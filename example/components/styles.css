@@ -3,7 +3,7 @@
 :focus:not(:focus-visible){outline:none}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text-primary);background:var(--canvas);-webkit-font-smoothing:antialiased}
-:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#F6F7F9;--brand:#0A2540;--brand-hover:#0D2E52;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#4536F0;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#D5DAE0;--border-light:#EDEFF2;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
+:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#F6F7F9;--brand:#0A2540;--brand-hover:#1B3A5C;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#5A52F0;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#EAECF0;--border-light:#F2F3F5;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
 ::selection{background:var(--brand);color:#fff}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important}}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -105,7 +105,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.4);z-index:300;align-items:center;justify-content:center;animation:overlayIn 0.2s var(--ease)}
 .modal-overlay--open{display:flex}
 .modal-overlay--exit{display:flex;animation:overlayOut 0.15s var(--ease) forwards}
-.modal{background:var(--surface);border-radius:14px;padding:32px;width:400px;max-width:90vw;box-shadow:var(--shadow-lg)}
+.modal{background:var(--surface);border-radius:14px;padding:24px;width:400px;max-width:90vw;box-shadow:var(--shadow-lg)}
 .modal-overlay--open .modal{animation:modalIn 0.25s var(--ease)}
 .modal-overlay--exit .modal{animation:modalOut 0.15s var(--ease) forwards}
 @keyframes overlayIn{from{opacity:0}to{opacity:1}}
