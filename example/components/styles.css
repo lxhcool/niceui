@@ -3,7 +3,7 @@
 :focus:not(:focus-visible){outline:none}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text-primary);background:var(--canvas);-webkit-font-smoothing:antialiased}
-:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#F5F6F8;--brand:#0A2540;--brand-hover:#0D2E52;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#5148E5;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#E6E9ED;--border-light:#EFF1F4;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
+:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#EEF0F4;--brand:#0A2540;--brand-hover:#0D2E52;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#4536F0;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#D3D8DE;--border-light:#EFF1F4;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
 ::selection{background:var(--brand);color:#fff}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important}}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -27,8 +27,8 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 /* Button */
 .btn{font-family:"Inter",system-ui,sans-serif;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;line-height:1;transition:background 0.2s var(--ease),color 0.2s var(--ease),transform 0.15s var(--ease);border-radius:6px}
 .btn:active{transform:scale(0.97)}
-.btn--primary{background:var(--accent);color:#fff;padding:10px 22px;font-size:13px;font-weight:600}
-@media(hover:hover)and(pointer:fine){.btn--primary:hover{background:var(--accent-hover)}}
+.btn--primary{background:var(--accent);color:#fff;padding:10px 22px;font-size:13px;font-weight:600;transition:background 0.2s var(--ease),box-shadow 0.2s var(--ease),transform 0.15s var(--ease)}
+@media(hover:hover)and(pointer:fine){.btn--primary:hover{background:var(--accent-hover);box-shadow:0 2px 8px rgba(99,91,255,0.25)}}
 .btn--secondary{background:transparent;color:var(--text-primary);padding:10px 22px;font-size:13px;font-weight:500;border:1px solid var(--border)}
 @media(hover:hover)and(pointer:fine){.btn--secondary:hover{border-color:var(--text-secondary)}}
 .btn--text{background:transparent;color:var(--text-secondary);padding:10px 12px;font-size:13px;font-weight:500}
