@@ -4,21 +4,32 @@
 
 ## 机械门禁
 
-1. **强制 CSS 变量声明**：每个页面的 `:root` 必须包含以下九个语义变量，不允许在组件中直接写死色值：
+1. **强制 CSS 变量声明**：每个页面的 `:root` 必须定义完整的"组件色"变量，不允许在组件中直接写死色值。至少包含：
 
    ```css
    --canvas: <画布背景色>;
-   --surface: <表面/卡片色>;
+   --surface: <主要表面/卡片色>;
+   --surface-hover: <悬停表面色>;
    --brand: <品牌主色>;
-   --accent: <强调色>;
-   --text-primary: <主要文字色>;
-   --text-secondary: <辅助文字色>;
+   --brand-hover: <主色悬停>;
+   --text-primary: <主要文字>;
+   --text-secondary: <辅助文字>;
+   --text-tertiary: <弱化文字>;
    --border: <边界色>;
+   --shadow-sm: <小阴影>;   /* 或 shadow-md / shadow-lg */
    --max: <内容区最大宽度>;
    --gutter: <页面侧边距>;
    ```
 
-   缺少任意变量、或变量值无法通过 WCAG 4.5:1 前景/背景对比度检查的，视为不合格。
+   后台/工具类页面**额外必须**定义语义色和文字层级：
+   ```css
+   --text-strong: <标题/关键数据>;
+   --danger: <危险色>;  --danger-bg: <危险弱背景>;
+   --warning: <警告色>; --warning-bg: <警告弱背景>;
+   --success: <成功色>; --success-bg: <成功弱背景>;
+   ```
+
+   完整清单见 [视觉系统](visual-system.md) 的「完整组件色变量清单」。缺少任意变量、或变量值无法通过 WCAG 4.5:1 对比度检查的，视为不合格。业务组件中写死十六进制色值的，判定为缺少组件色系统。
 
 2. **自定义滚动条**：必须使用 `::-webkit-scrollbar` 定义轨道、滑块和悬停状态，同时使用 `scrollbar-width` + `scrollbar-color` 覆盖 Firefox。不允许直接暴露系统原生滚动条。
 

@@ -4,7 +4,7 @@
 
 ## 机械门禁
 
-1. **强制 ThemeData**：必须在 `MaterialApp` 的 `theme` 中定义以下语义颜色，不允许在 Widget 中直接写死 `Color()` 值：
+1. **强制 ThemeData**：必须在 `MaterialApp` 的 `theme` 中定义完整的"组件色"，不允许在 Widget 中直接写死 `Color()` 值。至少包含背景/表面层级、品牌主色及悬停、文字层级（primary/secondary/tertiary）、边框色、阴影；后台/工具类额外包含 danger/warning/success 语义色及弱背景：
 
    ```dart
    ThemeData(
@@ -13,16 +13,19 @@
          canvas: Color(0xFF...),
          surface: Color(0xFF...),
          brand: Color(0xFF...),
-         accent: Color(0xFF...),
          textPrimary: Color(0xFF...),
          textSecondary: Color(0xFF...),
+         textTertiary: Color(0xFF...),
          border: Color(0xFF...),
+         danger: Color(0xFF...),
+         success: Color(0xFF...),
+         warning: Color(0xFF...),
        ),
      ],
    )
    ```
 
-   或者使用 `ThemeData` 自带的 `colorScheme` 扩展。缺少任意语义色或对比度不达标视为不合格。
+   或者使用 `ThemeData` 自带的 `colorScheme` 扩展。缺少任意语义色或对比度不达标视为不合格。Widget 中写死 `Color(0xFF...)` 的，判定为缺少组件色系统。完整清单见 [视觉系统](visual-system.md)。
 
 2. **自定义滚动条**：必须使用 `ScrollbarTheme` 自定义轨道和滑块样式，不允许使用平台默认滚动条外观。
 

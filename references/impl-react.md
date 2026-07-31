@@ -4,21 +4,19 @@
 
 ## 机械门禁
 
-1. **强制设计令牌**：必须定义以下语义令牌，使用 Tailwind 的 `tailwind.config.js`、CSS Modules 的变量文件或 styled-components 的 `ThemeProvider`，不允许在组件中写死色值：
+1. **强制设计令牌**：必须定义完整的"组件色"令牌，使用 Tailwind 的 `tailwind.config.js`、CSS Modules 的变量文件或 styled-components 的 `ThemeProvider`，不允许在组件中写死色值：
 
    ```
-   canvas       — 画布背景色
-   surface      — 表面/卡片色
-   brand        — 品牌主色
-   accent       — 强调色
-   text-primary — 主要文字色
-   text-secondary — 辅助文字色
-   border       — 边界色
-   max-width    — 内容区最大宽度
-   gutter       — 页面侧边距
+   canvas / surface / surface-hover  — 背景与表面层级
+   brand / brand-hover               — 品牌主色及悬停
+   text-primary / text-secondary / text-tertiary — 文字层级
+   border                            — 边界色
+   danger / warning / success + 各自 bg — 语义色（后台/工具类必选）
+   shadow-sm / md / lg               — 阴影层级
+   max-width / gutter                — 内容宽度与页边距
    ```
 
-   使用 Tailwind 时，在 `theme.extend.colors` 中定义这些令牌；使用 CSS Modules 时在 `:root` 中定义 CSS 变量。缺少任意令牌或对比度不达标视为不合格。
+   使用 Tailwind 时，在 `theme.extend.colors` 中定义这些令牌；使用 CSS Modules 时在 `:root` 中定义 CSS 变量。缺少任意令牌或对比度不达标视为不合格。业务组件中写死 `#xxxxxx` 的，判定为缺少组件色系统。完整清单见 [视觉系统](visual-system.md)。
 
 2. **组件结构**：每个独立 UI 区块必须是一个命名组件，文件路径与组件名一致。不允许在单个文件中编写所有页面内容。
 
