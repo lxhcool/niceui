@@ -55,6 +55,12 @@
 10. **过渡品质**：所有 hover、focus、active 状态变化必须使用平滑过渡，`transition` 时长控制在 `150ms–250ms`，缓动函数使用 `ease` 或 `cubic-bezier(0.33, 1, 0.68, 1)`。不允许无过渡的瞬间状态跳变。同一页面的过渡时长保持一致。
 
 11. **浮层动效与尺寸**：Modal、Dialog、Popover、Tooltip、Dropdown 等浮层必须同时实现进入和退出动画。进入动画时长 `200ms–300ms`，退出动画 `150ms–200ms`。退出动画不可省略或设为零时长。使用 `@keyframes` 或 `transition` 控制，不允许仅靠 `display: none/block` 切换。由于无法在 `display: none` 上运行动画，退出动画必须通过 JS 控制：先添加退出动画 class → 等待动画结束后（`setTimeout` 匹配动画时长）→ 再隐藏元素。Modal 遮罩必须有渐入/渐出动画。Select 下拉面板同样需要淡入/淡出（opacity + translateY）。**Modal/Dialog 的内边距最大 24px**，不允许更大的内边距造成弹窗内容松散。**弹窗底部按钮右对齐**：确认/主要操作按钮放在右侧，取消/次要按钮放在主要按钮左侧，操作区使用 `display: flex; justify-content: flex-end; gap: 8-10px`。
+11b. **所有出现/消失/展开/收起必须有双向过渡**：不仅浮层，以下类型也必须有进入和退出两个方向的动画，禁止只有出现没有消失、或只有展开没有收起：
+   - Accordion / Collapse 展开与收起（`max-height` + `transition`，或 JS 控制高度）
+   - Tabs 切换（淡入或滑入）
+   - 任何通过 JS 显示/隐藏的容器（`hidden` 属性、`display` 切换、`classList` 添加移除）
+   - 列表项的增删（新项滑入，移除项滑出）
+   - 只要元素有两种可见状态，就必须为两个方向都提供过渡；缺失任意一个方向的动画即判定为交互不完整。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
 12b. **浮层与触发元素间距**：Select 下拉面板、Dropdown、Popover、Tooltip 等浮层与触发元素之间必须保留 4–8px 垂直间距（`top: calc(100% + 4px)` 或 `margin-top: 4px`），不允许紧贴触发元素无间距。
