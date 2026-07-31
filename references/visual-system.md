@@ -168,13 +168,27 @@
 
 ### 推荐学习资源
 
-- **Refactoring UI**（书）— 第 4 章色彩：先选品牌色，通过调明度生成完整色板
-- **Material Design 色彩系统**（material.io/design/color）— Key Color + tonal palette，按亮度分 10 级
-- **Color and Contrast**（web.dev）— 对比度计算、无障碍、深浅模式的工程化实践
-- **Huemint.com** — AI 品牌色生成器
-- **Realtime Colors**（realtimecolors.com）— 实时预览配色在 UI 组件上的效果
-- **Coolors.co** — 快速配色方案生成
+**书 / 文章：**
+- **Refactoring UI**（Adam Wathan & Steve Schoger）— 第 4 章专门讲色彩，核心方法：先选一个品牌色，通过调明度（不是换色相）生成完整色板。全书共 7 章，从排版到配色到阴影，是目前最适合 UI 设计师的色彩读物
+- **Designing Color Systems**（https://designingcolorsystems.com）— 实操向的色彩系统搭建指南
+- **Color in UI Design: A Practical Framework**（uxdesign.cc）— 搜索这篇，讲了如何从一张图片或一个品牌色推导整站配色
+- **Material Design Color System**（material.io/design/color）— Google 的色彩方法论：Key Color → Tonal Palette，按亮度分 10 级，覆盖浅色/深色模式
+
+**视频 / 课程：**
+- **The Secret to配色设计（YouTube/Bilibili 搜索"配色 设计 原理"）** — 多看不同设计师的配色过程比读理论更有用
+- **Learn UI Design（scrimba.com 或 YouTube）**— 有专门的配色章节，演示从选色到应用到组件的全过程
+
+**工具（学习用）：**
+- **Huemint.com** — AI 品牌色生成器，给出主色后会推荐配套色板，可以学习它为什么这样搭配
+- **Realtime Colors**（realtimecolors.com）— 实时在网页 UI 上预览配色，比看色板直观百倍
+- **Coolors.co** — 快速生成配色方案，锁定色相后只调明度练习
 - **Contrast Grid**（EightShapes）— 检查所有前景/背景组合的 WCAG 对比度
+
+**练习方法：**
+1. 找 5 个你觉得配色好看的网站，用取色工具提取它们的色板（主色、中性色、强调色）
+2. 分析每个网站的色相数量（好的网站通常只用 1-2 个色相）
+3. 尝试用同样的色相数量重新配你的页面——如果别人的页面只用 1 个色相，你也不要用 3 个
+4. 练习"删除一个颜色"：你的页面现在用了 X 个色相，尝试删掉最不必要的一个，看页面是否变协调了（通常会的）
 
 ## 验证与诊断
 
