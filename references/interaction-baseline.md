@@ -27,7 +27,7 @@
 - 将 `transition` 写在元素的基础状态，使鼠标进入和离开时都能平滑过渡。
 - 只声明实际变化的属性，例如 `color`、`background-color`、`box-shadow`、`opacity` 和 `transform`；不要使用 `transition: all`。
 - 普通悬停反馈优先控制在 `120–200ms`，使用自然且响应及时的缓动；高频控件应更短、更克制。
-- 使用 `@media (hover: hover) and (pointer: fine)` 限制纯悬停效果，避免触控设备产生粘滞悬停状态。
+- 区分装饰性 hover 和功能性 hover：**装饰性 hover**（背景/文字/阴影变化）直接写 `:hover` 并带 `transition`，不包裹媒体查询，确保在 iframe 预览、触屏笔记本等环境仍生效；**功能性 hover**（悬停展开菜单、显示操作按钮等）才用 `@media (hover: hover) and (pointer: fine)` 包裹，避免触控设备产生粘滞悬停状态。
 - 不用悬停替代聚焦、选中或按下状态；键盘和触控用户必须获得等价反馈。
 - 按交互语义设置 `cursor`，不要让所有元素都保持 `default`，也不要给所有元素统一设置 `pointer`。
 - 为按钮、链接和明确可点击的区域使用 `pointer`；优先使用原生 `button` 和 `a`，不要仅靠鼠标指针伪装普通容器。

@@ -3,7 +3,7 @@
 :focus:not(:focus-visible){outline:none}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;color:var(--text-primary);background:var(--canvas);-webkit-font-smoothing:antialiased}
-:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#EEF0F4;--brand:#0A2540;--brand-hover:#0D2E52;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#4536F0;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#D3D8DE;--border-light:#EFF1F4;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
+:root{--canvas:#FFFFFF;--surface:#FFFFFF;--surface-hover:#F6F7F9;--brand:#0A2540;--brand-hover:#0D2E52;--brand-dim:rgba(10,37,64,0.08);--accent:#635BFF;--accent-hover:#4536F0;--accent-dim:rgba(99,91,255,0.12);--text-primary:#17181A;--text-secondary:#425466;--text-tertiary:#8A9099;--border:#D5DAE0;--border-light:#EDEFF2;--shadow-sm:0 1px 3px rgba(10,37,64,0.06);--shadow-md:0 4px 16px rgba(10,37,64,0.08);--shadow-lg:0 8px 32px rgba(10,37,64,0.1);--ease:cubic-bezier(0.33,1,0.68,1);--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--max:1120px;--gutter:24px}
 ::selection{background:var(--brand);color:#fff}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important}}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -28,11 +28,11 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .btn{font-family:"Inter",system-ui,sans-serif;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;line-height:1;transition:background 0.2s var(--ease),color 0.2s var(--ease),transform 0.15s var(--ease);border-radius:6px}
 .btn:active{transform:scale(0.97)}
 .btn--primary{background:var(--accent);color:#fff;padding:10px 22px;font-size:13px;font-weight:600;transition:background 0.2s var(--ease),box-shadow 0.2s var(--ease),transform 0.15s var(--ease)}
-@media(hover:hover)and(pointer:fine){.btn--primary:hover{background:var(--accent-hover);box-shadow:0 2px 8px rgba(99,91,255,0.25)}}
-.btn--secondary{background:transparent;color:var(--text-primary);padding:10px 22px;font-size:13px;font-weight:500;border:1px solid var(--border)}
-@media(hover:hover)and(pointer:fine){.btn--secondary:hover{border-color:var(--text-secondary)}}
-.btn--text{background:transparent;color:var(--text-secondary);padding:10px 12px;font-size:13px;font-weight:500}
-@media(hover:hover)and(pointer:fine){.btn--text:hover{color:var(--text-primary);background:var(--surface-hover);border-radius:6px}}
+.btn--primary:hover{background:var(--accent-hover);box-shadow:0 2px 8px rgba(99,91,255,0.25)}
+.btn--secondary{background:transparent;color:var(--text-primary);padding:10px 22px;font-size:13px;font-weight:500;border:1px solid var(--border);transition:border-color 0.2s var(--ease),background 0.2s var(--ease)}
+.btn--secondary:hover{border-color:var(--text-secondary)}
+.btn--text{background:transparent;color:var(--text-secondary);padding:10px 12px;font-size:13px;font-weight:500;transition:color 0.2s var(--ease),background 0.2s var(--ease)}
+.btn--text:hover{color:var(--text-primary);background:var(--surface-hover);border-radius:6px}
 .btn--disabled{opacity:0.45;cursor:not-allowed}
 .btn--sm{font-size:12px;padding:7px 16px}
 .btn--lg{font-size:14px;padding:12px 28px}
@@ -42,23 +42,24 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .input-label{font-size:12px;font-weight:500;color:var(--text-secondary)}
 .input{font-family:"Inter",system-ui,sans-serif;font-size:14px;padding:10px 14px;border:none;border-radius:6px;background:var(--surface-hover);color:var(--text-primary);width:100%;outline:none;transition:background 0.2s var(--ease),box-shadow 0.2s var(--ease);line-height:1.4}
 .input::placeholder{color:var(--text-tertiary)}
-@media(hover:hover)and(pointer:fine){.input:hover{background:var(--border)}}
+.input:hover{background:var(--border)}
 .input:focus{background:var(--surface);box-shadow:0 0 0 2px rgba(10,37,64,0.12),inset 0 0 0 1px var(--brand)}
 .input--disabled{opacity:0.5;cursor:not-allowed;background:var(--border-light)}
 
 /* Select */
 .select-wrap{position:relative;min-width:180px}
 .select-trigger{font-family:"Inter",system-ui,sans-serif;font-size:14px;padding:10px 36px 10px 14px;border:none;border-radius:6px;background:var(--surface-hover);color:var(--text-primary);cursor:pointer;width:100%;text-align:left;line-height:1.4;position:relative;transition:background 0.2s var(--ease)}
-@media(hover:hover)and(pointer:fine){.select-trigger:hover{background:var(--border)}}
+.select-trigger:hover{background:var(--border)}
 .select-trigger:focus{background:var(--surface);box-shadow:0 0 0 2px rgba(10,37,64,0.12),inset 0 0 0 1px var(--brand)}
 .select-trigger::after{content:'';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:6px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%235C5650' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;background-size:contain}
+.select-trigger:hover{background:var(--border)}
 .select-panel{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border-radius:6px;box-shadow:var(--shadow-md);z-index:200;padding:4px;max-height:200px;overflow-y:auto}
 .select-panel--open{display:block;animation:panelIn 0.2s var(--ease)}
 .select-panel--exit{display:block;animation:panelOut 0.15s var(--ease) forwards}
 @keyframes panelIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 @keyframes panelOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-4px)}}
 .select-option{padding:8px 12px;font-size:13px;color:var(--text-secondary);border-radius:4px;cursor:pointer;transition:background 0.15s var(--ease)}
-@media(hover:hover)and(pointer:fine){.select-option:hover{background:var(--canvas);color:var(--text-primary)}}
+.select-option:hover{background:var(--canvas);color:var(--text-primary)}
 .select-option--selected{background:var(--brand-dim);color:var(--brand);font-weight:600}
 
 /* Checkbox / Radio */
@@ -67,7 +68,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .check-label input,.radio-label input{display:none}
 .check-box,.radio-circle{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color 0.15s var(--ease),background 0.15s var(--ease)}
 .radio-circle{border-radius:50%}
-@media(hover:hover)and(pointer:fine){.check-label:hover .check-box,.radio-label:hover .radio-circle{border-color:var(--text-tertiary)}}
+.check-label:hover .check-box,.radio-label:hover .radio-circle{border-color:var(--text-tertiary)}
 .check-label input:checked+.check-box{background:var(--accent);border-color:var(--accent)}
 .check-label input:checked+.check-box::after{content:'';width:6px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
 .radio-label input:checked+.radio-circle{border-color:var(--accent)}
@@ -97,7 +98,7 @@ body{font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.6;col
 .nav-bar{display:flex;align-items:center;gap:24px;padding:12px 20px;background:var(--surface);border-radius:10px;width:100%}
 .nav-item{font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;padding:4px 0;text-decoration:none;transition:color 0.15s var(--ease);position:relative}
 .nav-item::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background:var(--brand);transform:scaleX(0);transition:transform 0.2s var(--ease)}
-@media(hover:hover)and(pointer:fine){.nav-item:hover{color:var(--text-primary)}.nav-item:hover::after{transform:scaleX(1)}}
+.nav-item:hover{color:var(--text-primary)}.nav-item:hover::after{transform:scaleX(1)}
 .nav-item--active{color:var(--brand)}.nav-item--active::after{transform:scaleX(1)}
 
 /* Modal */

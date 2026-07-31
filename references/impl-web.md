@@ -22,7 +22,10 @@
 
 2. **自定义滚动条**：必须使用 `::-webkit-scrollbar` 定义轨道、滑块和悬停状态，同时使用 `scrollbar-width` + `scrollbar-color` 覆盖 Firefox。不允许直接暴露系统原生滚动条。
 
-3. **悬停效果限制**：所有 `:hover` 样式必须被 `@media (hover: hover) and (pointer: fine)` 包裹，防止触屏设备上的粘滞悬停状态。
+3. **悬停效果限制**：区分两种 hover：
+   - **装饰性 hover**（背景色/文字色/阴影变化）：不需要 `@media (hover: hover) and (pointer: fine)` 包裹，直接写 `:hover`。这种反馈在触屏上无害，且保证在无法匹配该媒体查询的环境（iframe 预览、触屏笔记本等）中依然生效。
+   - **功能性 hover**（悬停展开菜单、悬停显示操作按钮、悬停切换内容）：必须被 `@media (hover: hover) and (pointer: fine)` 包裹，防止触屏设备上的粘滞悬停状态。
+   - 装饰性 hover 必须带 `transition` 过渡（150–250ms），不允许瞬间跳变。
 
 4. **动效降级**：必须包含 `@media (prefers-reduced-motion: reduce)` 规则，将所有过渡和动画时长设为接近零值。
 
