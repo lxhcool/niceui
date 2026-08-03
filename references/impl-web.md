@@ -74,10 +74,11 @@
    - 只要元素有两种可见状态，就必须为两个方向都提供过渡；缺失任意一个方向的动画即判定为交互不完整。
 
 12. **浮层定位**：Popover、Dropdown、Tooltip 等相对定位的浮层必须有正确的 `position` 关系（父元素 `position: relative`，浮层 `position: absolute`），且浮层应在视口边界时自动翻转方向。至少保证浮层不超出视口边界导致内容不可见。使用 `inset` 或 `top/right/bottom/left` 精确定位，不依赖 margin 偏移修正。
+12c. **浮层不得被 `overflow: hidden` 祖先裁剪**：绝对定位浮层若祖先链上有 `overflow: hidden`（或 `transform`/`filter`/`backdrop-filter` 改变定位上下文），会被祖先边界裁剪（如日历在 `overflow: hidden` 的 Hero 内弹出被截断）。日历、Dropdown 等弹出大面板的浮层优先用 `position: fixed` + JS 按触发器 `getBoundingClientRect()` 定位（赋值 `left`/`top` 并做视口 clamp，下方空间不足时向上弹出），彻底脱离裁剪上下文；或确保祖先不裁剪浮层。
 12b. **浮层与触发元素间距**：Select 下拉面板、Dropdown、Popover、Tooltip 等浮层与触发元素之间必须保留 4–8px 垂直间距（`top: calc(100% + 4px)` 或 `margin-top: 4px`），不允许紧贴触发元素无间距。
 13. **层叠顺序管理**：所有 `position` 非 `static` 的元素必须有明确的 `z-index` 声明，避免因默认层叠导致内容被遮盖。导航栏 `z-index: 100`，浮层 `z-index: 200`，弹窗/Modal `z-index: 300`，Toast `z-index: 999`。同一类型的元素保持相同 `z-index`。
 13b. **Toast/消息提示位置**：网页的 Toast、消息提示、通知条必须显示在**页面顶部**（`position: fixed; top: 16-20px`），居中或右对齐，不允许放到底部。底部 Toast 会被固定播放器、操作栏、聊天输入框遮挡。消息条从上向下滑入（`transform: translateY(-8px) → 0` + `opacity`），退出反向滑出。
-13c. **相邻区块间距**：页面上任何两个相邻的独立区块（标题区、tab 栏、内容区、卡片、列表、按钮组等）之间必须有明确间距，不允许贴在一起。使用 `margin-bottom` 或 `gap`（`16-24px` 常规区块，`24-32px` 较大区块）。检查方式：视觉上每个区块边缘应有清晰的留白分隔，tab 栏与下方内容、按钮与相邻元素、标题与正文之间都不应紧贴。
+13c. **相邻区块间距**：页面上任何两个相邻的独立区块（标题区、tab 栏、内容区、卡片、列表、按钮组等）之间必须有明确间距，不允许贴在一起。使用 `margin-bottom` 或 `gap`（`16-24px` 常规区块，`24-32px` 较大区块）。检查方式：视觉上每个区块边缘应有清晰的留白分隔，tab 栏与下方内容、按钮与相邻元素、标题与正文之间都不应紧贴。**表单步骤/分组容器内部的独立卡片或字段块之间也要保持间距**（如 `.book-card + .book-card { margin-top: 18px; }` 或步骤容器 `gap`），不能因为外层容器已有 `gap` 就忽略内部相邻元素间距。
 14. **卡片/列表项内容不被截断**：网格或列表中的每个项目必须能完整显示其内部内容（图片、标题、描述、标签等），不允许因 `overflow: hidden`、固定高度不足或 `max-height` 限制导致内容被裁剪或被相邻项目遮挡。如果内容过多应使用 `min-height` 确保基础可见区域，或允许项目高度随内容自适应（`height: auto`）。图片容器固定宽高比，文字区域不设固定高度。
 
 15. **状态圆点/徽标样式统一**：状态指示点（`dot`、状态圆点）必须：
@@ -169,6 +170,8 @@
 ☐ 官网/品牌/创意页有实质动效或交互焦点（Canvas/滚动/鼠标/入场，非静态排版）
 ☐ 浮层有进入+退出动画（非 display 切换）
 ☐ 浮层定位正确（不超出视口，有 position 关系）
+☐ 浮层未被 overflow:hidden 祖先裁剪（fixed 定位或祖先不裁剪）
+☐ 表单步骤/分组内独立卡片间距明确
 ☐ Toast/消息提示显示在顶部（非底部）
 ☐ 相邻区块间距明确（tab 与内容、标题与正文无紧贴）
 ☐ 无任何 outline（*:focus 与 *:focus-visible 均已 outline: none，焦点用 box-shadow 指示）
