@@ -1,6 +1,6 @@
 {
   "name": "ui-nice-skill",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "面向网页与应用界面的设计、实现和审查工作流。让任何模型都能产出质量稳定的真实界面。",
   "main": "SKILL.md",
   "files": [
