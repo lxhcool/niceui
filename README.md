@@ -19,6 +19,23 @@ niceui -h / --help         # 显示帮助
 
 ## 使用
 
+### 更新
+
+```bash
+# 项目内安装的
+npm update ui-nice-skill          # 或 npm install ui-nice-skill@latest
+
+# 全局安装的
+npm install -g ui-nice-skill@latest
+
+# 更新后必须重新同步到 AI 的 skill 目录（npm 更新不会自动覆盖已复制过去的文件）
+niceui i <工具>    # 或 niceui i all
+```
+
+> 注意：`npm` 只是把 `niceui` 命令装好，**不会自动把 skill 装进某个 AI**。npm 更新后，之前用 `niceui i` 复制到 `~/.claude/skills/`、`~/.config/opencode/skill/` 等目录的文件不会自动刷新，需要重新执行 `niceui i <工具>` 或 `niceui i all`。
+>
+> 若另一个 AI 提示找不到 `niceui` 命令：确认已全局安装（`npm install -g ui-nice-skill`），并把全局 bin 目录加入 PATH。用 fnm/nvm 管理 Node 时全局 bin 在 `$(npm prefix -g)/bin`，可在 `~/.zshrc` 中加 `export PATH="$(npm prefix -g)/bin:$PATH"`。
+
 ### 在任何 AI 工具中使用
 
 将 `SKILL.md` 的内容作为系统提示词提供给 AI 模型。模型会自动按其中的 6 步工作流（理解任务 → 检查项目 → 确定方向 → 完整实现 → 验证结果 → 迭代）执行设计任务。
