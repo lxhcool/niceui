@@ -47,7 +47,7 @@
 
 适合品牌、产品、科技、影视类官网。用真实影像驱动交互，比抽象 Canvas 更有记忆点，也更符合「真实内容」原则。**当用户要求「炫酷」且产品有视觉素材潜力时，优先考虑视频交互而非 canvas 粒子。**
 
-- **滚动驱动视频（scroll-scrub）**：页面滚动进度映射到 `video.currentTime`，视频随滚动逐帧推进；适合产品演示、过程叙事。实现：`muted + loop + playsinline + preload="metadata"` 的 `<video>`，rAF 节流的 scroll 监听，`currentTime = progress × duration`，仅当与当前值差值足够大时才 seek（避免高频 seek 卡顿）
+- **滚动驱动视频（scroll-scrub）**：页面滚动进度映射到 `video.currentTime`，视频随滚动逐帧推进；适合产品演示、过程叙事。实现：`muted + loop + playsinline + preload="auto"` 的 `<video>`，rAF 节流的 scroll 监听，`currentTime = progress × duration`，仅当与当前值差值足够大时才 seek（避免高频 seek 卡顿）。**`preload="metadata"` 只加载元数据、不加载帧数据，暂停时是黑屏——滚动驱动视频必须用 `preload="auto"`，并在 `loadedmetadata` 后调用 `video.play()`（muted 自动播放）保证有帧可见，滚动时再 seek 定位**
 - **整屏视频 Hero**：首屏全屏/成片视频 + 叠加 HUD（扫描线、角标、数据面板、热点），视频自动循环播放
 - **场景式滚动叙事**：滚动到不同区段切换视频片段或关键帧，配合文字转场
 - **视频 + Canvas/WebGL 合成**：视频上叠加粒子、光束、图形层，形成「真实影像 + 数字层」的质感
@@ -59,7 +59,7 @@
 4. **滚动驱动视频**：rAF 节流、差值阈值控制 seek 频率；离屏（hero 不在视口）或切后台时暂停 seek
 5. **`prefers-reduced-motion`**：不滚动驱动，停留静态封面或第一帧
 6. 不劫持滚动、不强制播放；装饰性视频加 `aria-hidden`
-7. 视频文件控制体积（≤ 720p），`preload="metadata"`，减少首屏带宽
+7. 视频文件控制体积（≤ 720p）。**滚动驱动视频必须 `preload="auto"`**（`preload="metadata"` 会导致暂停黑屏），并在 `loadedmetadata` 后 `video.play()` 保证帧可见；`preload="metadata"` 仅适用于静止封面即够的场合
 
 
 ### 鼠标 / 指针交互
