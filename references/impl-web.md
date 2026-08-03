@@ -120,6 +120,7 @@
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
     - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
+    - **开关/切换控件（switch）**：开启与关闭状态必须至少有 `2` 个肉眼可辨差异——**轨道颜色不同**（关闭：中性浅色；开启：品牌色/语义色）+ **滑块位移 ≥ 16px**（左右切换）。不允许只改滑块颜色或只换一个细微差异，导致开/关长得一样。使用原生 `<input type="checkbox">` 或 `role="switch"` + `aria-checked`，样式由 `:checked` / `[aria-checked="true"]` 驱动，不允许只用 JS 加 class 而无语义。设置页至少要有一个开关处于关闭状态作演示，不能所有开关都预置为「开」。检查方式：点击前后轨道颜色与滑块位置都必须有肉眼可辨的变化，且对比度足够。
     - 焦点样式实施细节（防止焦点环丢失、冲突或被截断）：
       - **禁止任何 outline（含 `:focus-visible`）**：重置阶段用 `*:focus, *:focus-visible { outline: none; }` 统一关闭所有 outline。文本输入框在鼠标点击时也匹配 `:focus-visible`，任何残留的 outline 规则都会把焦点环带进输入框，与 box-shadow 焦点环形成双重圆环。焦点指示只能通过 `box-shadow` 提供。
       - **全局 `:focus-visible` 不得强制修改 `border-radius`**：outline 会自动跟随元素自身圆角，额外声明 `border-radius` 会把胶囊/圆角输入框在聚焦时强行变成方形
@@ -162,6 +163,7 @@
 ☐ 卡片/按钮/弹窗均有明确 border-radius（含 0）
 ☐ 图片容器有 aspect-ratio 加载前占位色
 ☐ 交互状态完整（rest/hover/focus/active/disabled/loading）
+☐ 开关/切换控件开闭状态可辨（轨道颜色 + 滑块位移 ≥16px，非仅有细微差异）
 ☐ hover/选中背景与内容无贴边（状态背景四周有 ≥6px 内边距）
 ☐ 表单控件已自定义，无原生 select/checkbox/date
 ☐ 至少一个非标准布局（错位/不对称/溢出等）
