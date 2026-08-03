@@ -43,7 +43,7 @@
 5. **响应式断点**：至少包含一个 `max-width: 768px` 或更窄的断点，在该断点下网格布局必须变为单列。
 
 6. **CSS 文件结构**：CSS 文件必须按以下顺序组织，每个区块前标注注释头：
-1. Reset / 盒模型基线（含 `:focus:not(:focus-visible) { outline: none; }` 移除默认 outline，使用 `:focus-visible` 自定义焦点样式；**表单控件必须额外排除 outline**，见规则 15 的焦点样式实施细节）
+1. Reset / 盒模型基线（**禁止任何 outline**：`*:focus, *:focus-visible { outline: none; }`，焦点指示一律使用 box-shadow；见规则 15 的焦点样式实施细节）
 2. 排版基线（body、字族、字号、行高、字体平滑）
    3. 语义变量（:root）
    4. 自定义滚动条
@@ -109,13 +109,13 @@
 15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
     - **默认**（rest）：清晰可辨认为交互元素
     - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`。按钮、输入框、Select 触发器、下拉选项等所有表单控件必须有悬停效果，不允许无悬停反馈。**悬停变化必须肉眼可辨**：背景色 HSL L 值差 ≥ 5%，或边框色明显变化，或附加阴影。不允许仅微调色相导致用户无法察觉 hover 已生效。
-    - **聚焦**（focus）：使用 `:focus-visible` 自定义焦点环（非默认 outline），区别于 hover。输入框类元素使用双层 `box-shadow` 聚焦效果：外层 2px 品牌色低透明度光晕 + 内层 1px 品牌色实色 inset 边框。外光晕提供视觉提示，内实色提供精确边界。不允许仅使用透明度颜色作为唯一焦点指示。
+    - **聚焦**（focus）：**禁止出现任何 outline**（包括 `:focus-visible` 的 outline）。统一用 `*:focus, *:focus-visible { outline: none; }` 关闭，再通过 box-shadow 提供焦点指示。输入框类元素使用双层 `box-shadow` 聚焦效果：外层 2px 品牌色低透明度光晕 + 内层 1px 品牌色实色 inset 边框。非表单交互元素（链接、按钮）在 `:focus-visible` 下使用 `box-shadow: 0 0 0 2px <品牌色低透明度>` 作为焦点环。外光晕提供视觉提示，内实色提供精确边界。不允许仅使用透明度颜色作为唯一焦点指示。
     - **按下/激活**（active）：按钮必须有按下状态反馈（`transform: scale(0.97)` 或背景加深），时长 ≤ 100ms，不允许无 active 效果的按钮。非按钮元素不需要 active 状态
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
     - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
     - 焦点样式实施细节（防止焦点环丢失、冲突或被截断）：
-      - **表单控件必须显式禁用 outline**：`input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none; }`。文本输入框在鼠标点击时也会匹配 `:focus-visible`，仅靠 `:focus:not(:focus-visible)` 无法移除点击聚焦时的 outline，全局 `:focus-visible { outline: ... }` 会把默认焦点环带进输入框，与 box-shadow 焦点环形成双重圆环
+      - **禁止任何 outline（含 `:focus-visible`）**：重置阶段用 `*:focus, *:focus-visible { outline: none; }` 统一关闭所有 outline。文本输入框在鼠标点击时也匹配 `:focus-visible`，任何残留的 outline 规则都会把焦点环带进输入框，与 box-shadow 焦点环形成双重圆环。焦点指示只能通过 `box-shadow` 提供。
       - **全局 `:focus-visible` 不得强制修改 `border-radius`**：outline 会自动跟随元素自身圆角，额外声明 `border-radius` 会把胶囊/圆角输入框在聚焦时强行变成方形
       - **焦点环不得被父容器 `overflow: hidden` 截断**：`max-height` 展开/收起容器实际高度等于内容高度（`max-height` 只是上限），容器内的焦点环（`outline-offset`、向外扩散的 box-shadow）超出容器边界会被裁剪。三种解法，至少用一种：
         - 给容器加内边距（`padding` ≥ 焦点环宽度，如 `padding: 6px 4px`），让环落在容器内部
@@ -167,7 +167,7 @@
 ☐ 浮层定位正确（不超出视口，有 position 关系）
 ☐ Toast/消息提示显示在顶部（非底部）
 ☐ 相邻区块间距明确（tab 与内容、标题与正文无紧贴）
-☐ 移除了默认 outline（使用 :focus-visible 替代）
+☐ 无任何 outline（*:focus 与 *:focus-visible 均已 outline: none，焦点用 box-shadow 指示）
 ☐ 表单控件已禁用 outline（仅双层 box-shadow 焦点环，无双重圆环）
 ☐ 焦点环未被 overflow:hidden 容器截断（容器有内边距或环在容器上，展开内聚焦已延迟）
 ☐ 状态圆点为正圆且语义色对比足够
