@@ -84,11 +84,12 @@ niceui r codex --write     # 写入 ./AGENTS.md（--force 覆盖已安装）
 ```
 ui-nice-skill/
 ├── SKILL.md             ← 主技能定义（核心原则、工作流程、防呆门禁、输出要求）
-├── references/           ← 17 份参考文档
+├── references/           ← 18 份参考文档
 │   ├── impl-web.md       — Web 原生实现规则
 │   ├── impl-react.md     — React/Vue/Tailwind 实现规则
 │   ├── impl-flutter.md   — Flutter 实现规则
 │   ├── modify-existing.md — 修改/重构已有项目的保留式流程
+│   ├── motion-canvas.md  — 官网/品牌页的沉浸动效与 Canvas 技术目录
 │   ├── design-direction.md  — 26 种设计气质方向
 │   ├── design-methodology.md — 设计流程方法论
 │   ├── design-baseline.md    — 跨风格设计基线
@@ -108,6 +109,7 @@ ui-nice-skill/
 - **反模式清单** — 10 条常见模板组合自动拒绝（暖灰+赤陶、暖灰+灰绿磨砂默认模板、后台侧栏模板、登录卡片模板等）
 - **跨样例差异** — 连续交付必须拉开色相家族/色彩模式差异；批量产出按配额制分配（同一色相家族占比 ≤ 1/3，至少覆盖 3 种色彩模式），防止示例集同质化
 - **风格推力** — 非标准布局 / 两种字体 / 三级字号 / 微交互 / 间距节奏 / 非卡片分区
+- **沉浸动效** — 官网/品牌/创意页默认至少一个 Canvas/滚动/鼠标/入场动效焦点，可降级且不遮挡内容
 - **防巨型 UI** — 卡片使用限制 / 首屏信息量 / 密度按页面类型匹配
 - **领域内容模型** — 编码前推导产品核心内容类型，不空摆组件
 - **平台适配** — Web（CSS）/ React / Flutter 各有一套独立实现门禁
