@@ -11,8 +11,10 @@ npm install ui-nice-skill
 # 全局安装（终端直接输出 skill 内容）
 npm install -g ui-nice-skill
 niceui                     # 输出完整 SKILL.md
-niceui --ref / -r          # 列出可用参考文档
-niceui --dir / -d          # 输出安装路径
+niceui ls                  # 列出支持的 CLI 工具
+niceui -r / --ref          # 列出可用参考文档
+niceui -d / --dir          # 输出安装路径
+niceui -h / --help         # 显示帮助
 ```
 
 ## 使用
@@ -23,15 +25,51 @@ niceui --dir / -d          # 输出安装路径
 
 对于复杂项目，可同时提供 `references/` 目录中的参考文档作为补充指导。
 
+### 一键适配所有 CLI 工具
+
+skill 本体使用 Agent Skills 标准（`SKILL.md` + frontmatter），可被多数 CLI 工具原生加载。用 `niceui` 命令统一安装：
+
+```bash
+niceui i all               # 一键安装到所有工具
+
+# 按工具单独安装（skill 复制到目录 / 规则写入项目文件）
+niceui i claude            # Claude Code  → ~/.claude/skills/niceui/
+niceui i opencode          # opencode     → ~/.config/opencode/skill/niceui/
+niceui i cursor            # Cursor       → .cursor/skills/ + .cursor/rules/niceui.mdc
+niceui i windsurf          # Windsurf     → .windsurf/rules/niceui.md
+niceui i codex             # Codex CLI    → ./AGENTS.md（同 gemini / copilot）
+niceui i aider             # Aider        → ./CONVENTIONS.md
+
+# 只输出规则文件内容（含内联参考文档，不写入文件）
+niceui r codex             # 打印 AGENTS.md 内容
+niceui r codex --write     # 写入 ./AGENTS.md（--force 覆盖已安装）
+```
+
+| CLI 工具 | 安装方式 | 位置 |
+|---|---|---|
+| Claude Code | skill | `~/.claude/skills/niceui/` |
+| opencode | skill | `~/.config/opencode/skill/niceui/` |
+| Cursor | skill + 规则 | `.cursor/skills/` + `.cursor/rules/niceui.mdc` |
+| Windsurf | 规则 | `.windsurf/rules/niceui.md` |
+| Codex / Gemini / Copilot | 规则 | `./AGENTS.md` |
+| Aider | 规则 | `./CONVENTIONS.md` |
+
+快捷命令：`niceui i <工具>`（install）、`niceui r <工具>`（rules）、`niceui ls`（list）。
+
 ### 在 opencode 中使用
 
 在 `opencode.json` 中配置：
 
 ```json
 {
-  "skills": ["ui-nice-skill"]
+  "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "paths": ["./node_modules/ui-nice-skill"]
+  }
 }
 ```
+
+或直接运行 `niceui i opencode` 安装到全局 `~/.config/opencode/skill/niceui/`，所有项目自动生效。
 
 ### 在 Cursor / Windsurf 等 AI IDE 中使用
 
