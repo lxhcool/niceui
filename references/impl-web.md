@@ -43,7 +43,7 @@
 5. **响应式断点**：至少包含一个 `max-width: 768px` 或更窄的断点，在该断点下网格布局必须变为单列。
 
 6. **CSS 文件结构**：CSS 文件必须按以下顺序组织，每个区块前标注注释头：
-1. Reset / 盒模型基线（含 `:focus:not(:focus-visible) { outline: none; }` 移除默认 outline，使用 `:focus-visible` 自定义焦点样式）
+1. Reset / 盒模型基线（含 `:focus:not(:focus-visible) { outline: none; }` 移除默认 outline，使用 `:focus-visible` 自定义焦点样式；**表单控件必须额外排除 outline**，见规则 15 的焦点样式实施细节）
 2. 排版基线（body、字族、字号、行高、字体平滑）
    3. 语义变量（:root）
    4. 自定义滚动条
@@ -114,6 +114,13 @@
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
     - **加载/处理中**（loading）：按钮文字替换为加载指示或骨架屏，禁用重复点击
     - 输入框特有：hover 时边框或背景微变 → focus 时边框色变为强调色 + 焦点环 → 填写状态保持焦点色 → 禁用态灰底不可编辑
+    - 焦点样式实施细节（防止焦点环丢失、冲突或被截断）：
+      - **表单控件必须显式禁用 outline**：`input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none; }`。文本输入框在鼠标点击时也会匹配 `:focus-visible`，仅靠 `:focus:not(:focus-visible)` 无法移除点击聚焦时的 outline，全局 `:focus-visible { outline: ... }` 会把默认焦点环带进输入框，与 box-shadow 焦点环形成双重圆环
+      - **全局 `:focus-visible` 不得强制修改 `border-radius`**：outline 会自动跟随元素自身圆角，额外声明 `border-radius` 会把胶囊/圆角输入框在聚焦时强行变成方形
+      - **焦点环不得被父容器 `overflow: hidden` 截断**：`max-height` 展开/收起容器实际高度等于内容高度（`max-height` 只是上限），容器内的焦点环（`outline-offset`、向外扩散的 box-shadow）超出容器边界会被裁剪。三种解法，至少用一种：
+        - 给容器加内边距（`padding` ≥ 焦点环宽度，如 `padding: 6px 4px`），让环落在容器内部
+        - 焦点环声明在容器本身（容器 `:focus-within`），环跟随容器边界而非被裁剪的内层元素
+        - 在展开/收起容器内程序化聚焦时，`focus()` 延迟到过渡结束（`setTimeout` 时长 = transition 时长，约 240ms）后再调用
     - 缺少任一状态即为交互不完整，判定为不合格
 
 ## 风格推力
@@ -158,6 +165,8 @@
 ☐ Toast/消息提示显示在顶部（非底部）
 ☐ 相邻区块间距明确（tab 与内容、标题与正文无紧贴）
 ☐ 移除了默认 outline（使用 :focus-visible 替代）
+☐ 表单控件已禁用 outline（仅双层 box-shadow 焦点环，无双重圆环）
+☐ 焦点环未被 overflow:hidden 容器截断（容器有内边距或环在容器上，展开内聚焦已延迟）
 ☐ 状态圆点为正圆且语义色对比足够
 ☐ 列表右侧列对齐（右边缘成连续竖线）
 ☐ 表格操作列图标垂直对齐（条件按钮用等宽占位）
