@@ -109,6 +109,7 @@
 15. **交互状态完整覆盖**：所有可交互元素必须实现以下状态，缺一不可：
     - **默认**（rest）：清晰可辨认为交互元素
     - **悬停**（hover）：背景/颜色/阴影变化，带 transition，仅限 `@media (hover: hover)`。按钮、输入框、Select 触发器、下拉选项等所有表单控件必须有悬停效果，不允许无悬停反馈。**悬停变化必须肉眼可辨**：背景色 HSL L 值差 ≥ 5%，或边框色明显变化，或附加阴影。不允许仅微调色相导致用户无法察觉 hover 已生效。
+    - **悬停/选中背景不得与内容贴边**：元素在 hover、focus、active 或选中态改变背景色时，状态背景四周与内部内容（文字、图标、标签）之间必须保留至少 `6–10px` 内边距，不允许背景色紧贴内容边缘或裁切内容。列表行/条目使用 `padding: 7px 10px; margin: 0 -10px;`（或等价方案）实现：状态背景在内容四周均匀留白，同时行内容仍与容器内其他元素保持水平对齐。检查方式：任何以背景色变化提示可点的条目，hover 后内容四周都有可见留白，背景未贴住文字或图标边缘。
     - **聚焦**（focus）：**禁止出现任何 outline**（包括 `:focus-visible` 的 outline）。统一用 `*:focus, *:focus-visible { outline: none; }` 关闭，再通过 box-shadow 提供焦点指示。输入框类元素使用双层 `box-shadow` 聚焦效果：外层 2px 品牌色低透明度光晕 + 内层 1px 品牌色实色 inset 边框。非表单交互元素（链接、按钮）在 `:focus-visible` 下使用 `box-shadow: 0 0 0 2px <品牌色低透明度>` 作为焦点环。外光晕提供视觉提示，内实色提供精确边界。不允许仅使用透明度颜色作为唯一焦点指示。
     - **按下/激活**（active）：按钮必须有按下状态反馈（`transform: scale(0.97)` 或背景加深），时长 ≤ 100ms，不允许无 active 效果的按钮。非按钮元素不需要 active 状态
     - **禁用**（disabled）：降低不透明度至 0.4–0.5，设置 `cursor: not-allowed`，不加额外装饰色。注意禁用态加上 `pointer-events: none` 会使光标样式失效（元素不接收指针事件），因此禁用态不应使用 `pointer-events: none`，仅使用 HTML 的 `disabled` 属性阻止交互即可。
@@ -156,6 +157,7 @@
 ☐ 卡片/按钮/弹窗均有明确 border-radius（含 0）
 ☐ 图片容器有 aspect-ratio 加载前占位色
 ☐ 交互状态完整（rest/hover/focus/active/disabled/loading）
+☐ hover/选中背景与内容无贴边（状态背景四周有 ≥6px 内边距）
 ☐ 表单控件已自定义，无原生 select/checkbox/date
 ☐ 至少一个非标准布局（错位/不对称/溢出等）
 ☐ 至少两种字体角色
